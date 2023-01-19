@@ -1,30 +1,62 @@
 <template>
-  <div id="nav">
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </div>
-  <router-view/>
+      <div class="header">
+        <Header/>
+      </div>
+
+      <div class="MainView">
+        <MainView/>
+      </div>
+
+      <div class="recommend">
+        <Recommend msg="Welcome to Your Vue.js + TypeScript App"/>
+      </div>
 </template>
 
-<style lang="less">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+<script lang="ts">
+import { Options, Vue } from 'vue-class-component';
+import Recommend from '@/components/Recommend.vue';
+import Header from '@/components/Header.vue';
+import MainView from '@/views/MainView.vue';
+
+@Options({
+  components: {
+    Recommend,
+    Header,
+    MainView
+  },
+})
+export default class Home extends Vue {}
+</script>
+
+<style lang="less" scoped>
+
+.recommend{
+  position: fixed;
+  background-color: rgba(110, 106, 110, 0.526);
+
+  top: 10vh;
+  right: 0vw;
+  height: 90vh;
+  width: 20vw;
 }
 
-#nav {
-  padding: 30px;
+.MainView{
+  position: absolute;
+  background-color: rgba(255, 0, 0, 0.494);
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  top: 10vh;
+  left: 0vw;
+  width: 80vw;
+  height: auto;
+}
 
-    &.router-link-exact-active {
-      color: #42b983;
-    }
-  }
+.header{
+  position: fixed;
+  background-color: rgba(41, 46, 99, 0.57);
+  
+  top: 0vw;
+  left: 0;
+  width: 100vw;
+  height: 10vh;
 }
 </style>
