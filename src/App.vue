@@ -53,7 +53,6 @@ export default class Home extends Vue {}
 .header{
   position: fixed;
   background-color: rgba(41, 46, 99, 0.57);
-  
   top: 0vw;
   left: 0;
   width: 100vw;

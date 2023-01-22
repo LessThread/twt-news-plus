@@ -31,7 +31,7 @@ import { Options, Vue } from 'vue-class-component';
     msg: String
   }
 })
-export default class HelloWorld extends Vue {
+export default class Header extends Vue {
   msg!: string
 }
 </script>
