@@ -5,7 +5,7 @@
       <hr style="border-color: black;"/>
     </div>
     <div class="message-box" v-for="index in 5" :key="index">
-      <h3>冯院叶底藏秋声 群英捧袂少年腾</h3>
+      <p>冯院叶底藏秋声 群英捧袂少年腾</p>
       
       <div class="foot">
         <div>
@@ -41,7 +41,7 @@ export default class Header extends Vue {
 .recommend{
   .head{
     position: relative;
-    padding-left: 1vw;
+    padding-left: 0.5vw;
     padding-right: 1vw;
   }
   .message-box{
@@ -49,6 +49,7 @@ export default class Header extends Vue {
     top: -.1vh;
     padding-left: 1vw;
     padding-right: 1vw;
+    font-weight: normal;
     .foot{
       display: flex;
       justify-content: space-between;

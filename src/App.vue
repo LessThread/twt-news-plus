@@ -29,10 +29,11 @@ export default class Home extends Vue {}
 </script>
 
 <style lang="less" scoped>
+@backgroundcolor : #fafafa;
 
 .recommend{
   position: fixed;
-  background-color: rgba(110, 106, 110, 0.526);
+  background-color: @backgroundcolor;
 
   top: 10vh;
   right: 0vw;
@@ -52,7 +53,7 @@ export default class Home extends Vue {}
 
 .header{
   position: fixed;
-  background-color: rgba(41, 46, 99, 0.57);
+  background-color: @backgroundcolor;
   top: 0vw;
   left: 0;
   width: 100vw;
