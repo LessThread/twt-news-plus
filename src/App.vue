@@ -60,3 +60,17 @@ export default class Home extends Vue {}
   height: 10vh;
 }
 </style>
+
+<!-- <style lang="less">
+@i-width:20%;
+.el-carousel__indicators--outside{
+    position: absolute;
+    background-color: #FFA156;
+    width: @i-width;
+    left:100%-@i-width;
+    button{
+        height: 6px;
+        border-radius: 20%;
+    }
+}
+</style> -->
