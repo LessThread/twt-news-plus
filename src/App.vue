@@ -4,7 +4,8 @@
       </div>
 
       <div class="MainView">
-        <MainView/>
+        <router-view>
+        </router-view>
       </div>
 
       <div class="recommend">
@@ -43,7 +44,7 @@ export default class Home extends Vue {}
 
 .MainView{
   position: absolute;
-  background-color: rgba(255, 0, 0, 0.494);
+  background-color: rgba(118, 116, 116, 0.549);
 
   top: 10vh;
   left: 0vw;

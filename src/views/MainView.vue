@@ -21,7 +21,7 @@
 
             <div class="view-text">
                 <div class="infinite-list-wrapper" style="overflow: auto">
-                    <ul
+                    <div
                         v-infinite-scroll="load"
                         class="list"
                         :infinite-scroll-disabled="disabled"
@@ -34,7 +34,7 @@
                             </div>
                             <div class="list-inf">
                                 <div class="list-img-box">
-                                    <el-image src="https://i.328888.xyz/2023/01/22/O5Qfo.jpeg" lazy class="list-img"/>
+                                    <el-image src="https://img1.imgtp.com/2023/01/28/ZkjNaSIo.png" lazy class="list-img"/>
                                 </div>
                                 <div class="list-text-box">
                                     <p class="title">冯院叶底藏秋声 群英捧袂少年腾</p>
@@ -47,7 +47,7 @@
                             </div>
                         </div>
 
-                    </ul>
+                    </div>
                     <p v-if="loading">Loading...</p>
                     <p v-if="noMore" class="end-text">...再也没有更多了...</p>
                 </div>
@@ -99,14 +99,15 @@ export default defineComponent({
 @border-r : 8px;
 @main-view-width : 60vw;
 .main-view{
-    background-color: rgba(133, 136, 134, 0.115);
+    background-color: rgba(133, 136, 134, 0.469);
     position: absolute;
     z-index: -1;
     left: 18.5vw;
     width: @main-view-width;
     border-radius: @border-r;
     .carousel{
-        width: 100%;
+        width: 95%;
+        margin: 0 auto;
         .carouse-text{
             position: absolute;
             z-index: 2;
@@ -122,21 +123,26 @@ export default defineComponent({
         
     }
     .view-text{
-        margin-top: 1vh;
         width: 100%;
         .infinite-list-wrapper{
+            background-color: #FFA156;
+            margin: 2vh auto;
             width: 95%;
+
             .list-item{
                 background-color: rgba(245, 249, 248, 0.323);
                 position: relative;
-                margin-top: 10vh;
-                height: 25vh;
+                margin: 5vh auto;
+                min-height: 25vh;
+                width: 100%;
                 .list-inf{
+                    margin: 0 auto;
                     display: flex;
                     .list-img-box{
                         position: relative;
                         overflow: hidden;
                         width: 30%;
+                        background-color: red;
                     }
                     .list-text-box{
                         width: 70%;
