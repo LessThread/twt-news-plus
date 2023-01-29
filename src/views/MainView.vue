@@ -10,11 +10,12 @@
                 id="carID"
                 >
                     <div class="carouse-text">
-                        asdsad
+                        information
                     </div>
 
-                    <el-carousel-item v-for="item in 4" :key="item" >
-                        <h3 class="small justify-center" text="2xl">{{ item }}</h3>
+                    <el-carousel-item v-for="item in imgArr" :key="item" >
+                        <!-- <h3 class="small justify-center" text="2xl">{{ item }}</h3> -->
+                        <el-image :src="item" />
                     </el-carousel-item>
                 </el-carousel>
             </div>
@@ -34,7 +35,7 @@
                             </div>
                             <div class="list-inf">
                                 <div class="list-img-box">
-                                    <el-image src="https://img1.imgtp.com/2023/01/28/ZkjNaSIo.png" lazy class="list-img"/>
+                                    <el-image src="https://img1.imgtp.com/2023/01/28/ZkjNaSIo.png" loading="lazy" class="list-img"/>
                                 </div>
                                 <div class="list-text-box">
                                     <p class="title">冯院叶底藏秋声 群英捧袂少年腾</p>
@@ -61,7 +62,7 @@
 import { Options, Vue} from 'vue-class-component';
 import Sidebar from '../components/MainSidebar.vue';
 import {defineComponent,computed,ref} from 'vue'
-
+import {getPinnedNew} from '../api/api'
 
 
 
@@ -71,6 +72,10 @@ export default defineComponent({
         Sidebar
     },
     setup(){
+
+        const imgArr = ref(['https://img1.imgtp.com/2023/01/28/TRuKTWXE.jpg',
+                            'https://img1.imgtp.com/2023/01/28/Eo4qcrOW.jpg',
+                            'https://img1.imgtp.com/2023/01/28/lN6g5eaI.png'])
         const count = ref(10)
         const loading = ref(false)
         const noMore = computed(() => count.value >= 10)
@@ -82,11 +87,16 @@ export default defineComponent({
                 loading.value = false
                 }, 1000)
             }
+
+        getPinnedNew();
+
+
         return{
             count,
             loading,
             disabled,
             noMore,
+            imgArr,
             load
         }
     }
@@ -146,12 +156,19 @@ export default defineComponent({
                     }
                     .list-text-box{
                         width: 70%;
+
                         .title{
-                            width: 100%;
+                            margin-top: 0;
+                            margin-left: 1vw;
+                            font-size: 36px;
                         }
                         .foot{
+                            width: 70%;
                             display: flex;
                             justify-content: space-between;
+                            position: absolute;
+                            bottom: 0;
+                            
                         }
                     }
                 }
