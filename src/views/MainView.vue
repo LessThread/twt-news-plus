@@ -14,8 +14,9 @@
                     </div>
 
                     <el-carousel-item v-for="item in imgArr" :key="item" >
-                        <!-- <h3 class="small justify-center" text="2xl">{{ item }}</h3> -->
-                        <el-image :src="item" />
+                        <div class="run-box">
+                            <el-image :src="item" class="run" />
+                        </div>
                     </el-carousel-item>
                 </el-carousel>
             </div>
@@ -30,9 +31,9 @@
 
                         <div v-for="i in count" :key="i" class="list-item">
                             <div class="list-time">
-                                <p>time</p>
-                                <hr/>
+                                今天
                             </div>
+                            <hr/>
                             <div class="list-inf">
                                 <div class="list-img-box">
                                     <el-image src="https://img1.imgtp.com/2023/01/28/ZkjNaSIo.png" loading="lazy" class="list-img"/>
@@ -42,7 +43,7 @@
                                     <p class="tag">近日新闻+社团</p>
                                     <div class="foot">
                                         <p class="writer">作者</p>
-                                        <p class="time">2022.102</p>
+                                        <p class="time">2022.1111.102</p>
                                     </div>
                                 </div>   
                             </div>
@@ -88,7 +89,8 @@ export default defineComponent({
                 }, 1000)
             }
 
-        getPinnedNew();
+        let  PinnedNews = getPinnedNew().then(res => res);
+        console.log(PinnedNews);
 
 
         return{
@@ -118,6 +120,7 @@ export default defineComponent({
     .carousel{
         width: 95%;
         margin: 0 auto;
+        overflow: hidden;
         .carouse-text{
             position: absolute;
             z-index: 2;
@@ -127,8 +130,15 @@ export default defineComponent({
             width: @cwidth;
             height: 100%;
             left:100%-@cwidth;
-
-
+            }
+        
+        .run-box{
+            border-radius: @border-r;
+            overflow: hidden;
+            .run{
+                border-radius: @border-r;
+                overflow: hidden;
+            }
         }
         
     }
@@ -145,6 +155,10 @@ export default defineComponent({
                 margin: 5vh auto;
                 min-height: 25vh;
                 width: 100%;
+                .list-time{
+                    margin-bottom: 0;
+                    font-size: 40px;
+                }
                 .list-inf{
                     margin: 0 auto;
                     display: flex;
@@ -162,8 +176,12 @@ export default defineComponent({
                             margin-left: 1vw;
                             font-size: 36px;
                         }
+                        .tag{
+                            margin-left: 1vw;
+                        }
                         .foot{
-                            width: 70%;
+                            margin-left: 1vw;
+                            width: 67%;
                             display: flex;
                             justify-content: space-between;
                             position: absolute;
