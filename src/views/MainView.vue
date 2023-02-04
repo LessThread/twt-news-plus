@@ -1,4 +1,4 @@
-<template>
+<template
     <div>
         <Sidebar/>
         <div class="main-view">
@@ -50,7 +50,7 @@
                                 </div>
                             </div>
     
-                            <div v-for="(item) in NonNews" :key="item.id" class="list-item">
+                            <div v-for="(item) in TodayNews" :key="item.id" class="list-item">
                                 <div class="list-time">
                                     Today
                                 </div>
@@ -70,7 +70,31 @@
                                     </div>   
                                 </div>
                             </div>
+
+                            <div v-for="(item) in NonNews" :key="item.id" class="list-item">
+                                <div class="list-time">
+                                    Non
+                                </div>
+                                <hr/>
+                                <div class="list-inf">
+                                    <div class="list-img-box">
+                                        <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
+                                    </div>
+                                    <div class="list-text-box">
+                                        <p class="title">{{ item.title }}</p>
+                                        <p class="tag" >tag</p>
+                                        <div v-for="(itemTag,index) in item.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
+                                        <div class="foot">
+                                            <p class="writer">{{ item.contributorName }}</p>
+                                            <p class="time">{{item.releaseTime}}</p>
+                                        </div>
+                                    </div>   
+                                </div>
+                            </div>
+
+
                         </div>
+                        
                         
 
                     </div>
@@ -115,21 +139,11 @@ export default defineComponent({
         const load = () => {
             loading.value = true;
             setTimeout(() => {
-                count.value += 2
-                loading.value = false
+                count.value += 1
+                loading.value = true
                 }, 1000)
             }
-        
-        //时间流容器，处理瀑布流的时间问题
-        //code:1->置顶
-        //code:2->今日
-        //code:3->普通BOX
-
-        interface TimeBoxItem {
-            data:Array<any>,
-            code:number
-        }
-        
+    
         const PinnedNews = ref([] as Array<any>);
         const TodayNews = ref([] as Array<any>);
         const NonNews = ref([] as Array<any>);
@@ -139,13 +153,6 @@ export default defineComponent({
             await getPinnedNew()
             .then(res=>{
                 let RequestData = JSON.parse(JSON.stringify(res))
-                //console.log(RequestData)
-
-                // let PinnedItem:TimeBoxItem = {
-                //         data:RequestData,
-                //         code:1,
-                //     }
-                //PinnedNews.value.push(PinnedItem);
                 PinnedNews.value = RequestData;
             }).catch((res)=>{console.log(res)})
         }
@@ -155,15 +162,7 @@ export default defineComponent({
             await getNonTopNews()
             .then(res=>{
                 let RequestData = JSON.parse(JSON.stringify(res))
-                //console.log(RequestData)
-
-                let NorItem:TimeBoxItem = {
-                        data:RequestData,
-                        code:3,
-                    }
-                //NonNews.value.push(NorItem);
-            NonNews.value = RequestData
-
+                NonNews.value = RequestData
             }).catch((res)=>{console.log(res)})
         }
 
@@ -198,12 +197,6 @@ export default defineComponent({
                 })()
 
                 //提取今日新闻
-
-                let todayNewsItem = {
-                    code:2,
-                    data:[]
-                }
-
                 for(let i=0;i<NonNews.value.length;i++){
                     let data = NonNews.value[i].data
                     for(let j=0;j<data.length;j++){
@@ -213,7 +206,6 @@ export default defineComponent({
                         if(SendTime === nowTime){
                             TodayNews.value.push(item)
                             NonNews.value.splice(item)
-                            console.log('today');
                         }
                         else{
                             console.log('normal')
