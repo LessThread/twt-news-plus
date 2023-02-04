@@ -28,27 +28,50 @@
                         class="list"
                         :infinite-scroll-disabled="disabled"
                         > <!-- 无限滚动，注意要使用图片懒加载 -->
-
-                        <div v-for="(item , index ) in PinnedNews" :key="item.id" class="list-item">
-                            <div class="list-time">
-                                {{item.releaseTime}}-{{ index }}
-                            </div>
-                            <hr/>
-                            <div class="list-inf">
-                                <div class="list-img-box">
-                                    <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
+                        <div>
+                            <div v-for="(item) in PinnedNews" :key="item.id" class="list-item">
+                                <div class="list-time">
+                                    置顶
                                 </div>
-                                <div class="list-text-box">
-                                    <p class="title">{{ item.title }}</p>
-                                    <p class="tag" >tag</p>
-                                    <div v-for="(itemTag,index) in item.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
-                                    <div class="foot">
-                                        <p class="writer">{{ item.contributorName }}</p>
-                                        <p class="time">{{item.releaseTime}}</p>
+                                <hr/>
+                                <div class="list-inf">
+                                    <div class="list-img-box">
+                                        <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
                                     </div>
-                                </div>   
+                                    <div class="list-text-box">
+                                        <p class="title">{{ item.title }}</p>
+                                        <p class="tag" >tag</p>
+                                        <div v-for="(itemTag,index) in item.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
+                                        <div class="foot">
+                                            <p class="writer">{{ item.contributorName }}</p>
+                                            <p class="time">{{item.releaseTime}}</p>
+                                        </div>
+                                    </div>   
+                                </div>
+                            </div>
+    
+                            <div v-for="(item) in NonNews" :key="item.id" class="list-item">
+                                <div class="list-time">
+                                    Today
+                                </div>
+                                <hr/>
+                                <div class="list-inf">
+                                    <div class="list-img-box">
+                                        <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
+                                    </div>
+                                    <div class="list-text-box">
+                                        <p class="title">{{ item.title }}</p>
+                                        <p class="tag" >tag</p>
+                                        <div v-for="(itemTag,index) in item.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
+                                        <div class="foot">
+                                            <p class="writer">{{ item.contributorName }}</p>
+                                            <p class="time">{{item.releaseTime}}</p>
+                                        </div>
+                                    </div>   
+                                </div>
                             </div>
                         </div>
+                        
 
                     </div>
                     <p v-if="loading">Loading...</p>
@@ -64,7 +87,8 @@
 import { Options, Vue} from 'vue-class-component';
 import Sidebar from '../components/MainSidebar.vue';
 import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from 'vue'
-import {root,imgBed,getPinnedNew} from '../api/api'
+import {root,imgBed,getPinnedNew,getNonTopNews} from '../api/api'
+import { now } from 'lodash';
 
 
 
@@ -97,26 +121,108 @@ export default defineComponent({
             }
         
         //时间流容器，处理瀑布流的时间问题
-        let TimeBox = ref();
-        
-        //获取和处理所有置顶新闻稿
-        let  PinnedNews:any = ref()
+        //code:1->置顶
+        //code:2->今日
+        //code:3->普通BOX
 
+        interface TimeBoxItem {
+            data:Array<any>,
+            code:number
+        }
+        
+        const PinnedNews = ref([] as Array<any>);
+        const TodayNews = ref([] as Array<any>);
+        const NonNews = ref([] as Array<any>);
+
+        //获取和处理所有置顶新闻稿
         async function setPinnedNew(){
             await getPinnedNew()
             .then(res=>{
                 let RequestData = JSON.parse(JSON.stringify(res))
-                PinnedNews.value = JSON.parse(JSON.stringify(res))
-                console.log(PinnedNews.value)
-            }).then(res=>{
-                console.log(res)
-                //PinnedNews.value = JSON.parse(JSON.stringify(res))
+                //console.log(RequestData)
+
+                // let PinnedItem:TimeBoxItem = {
+                //         data:RequestData,
+                //         code:1,
+                //     }
+                //PinnedNews.value.push(PinnedItem);
+                PinnedNews.value = RequestData;
+            }).catch((res)=>{console.log(res)})
+        }
+
+        //获取和处理所有非置顶新闻稿
+        async function setNonTopNews() {
+            await getNonTopNews()
+            .then(res=>{
+                let RequestData = JSON.parse(JSON.stringify(res))
+                //console.log(RequestData)
+
+                let NorItem:TimeBoxItem = {
+                        data:RequestData,
+                        code:3,
+                    }
+                //NonNews.value.push(NorItem);
+            NonNews.value = RequestData
+
             }).catch((res)=>{console.log(res)})
         }
 
         
         onMounted(() => {
-            setPinnedNew()
+            (async () => {
+                await setPinnedNew();
+                await setNonTopNews();
+            })().then(()=>{
+                console.log(NonNews.value)
+
+                //格式化当前时间
+                let nowTime =(new Date).getFullYear() + '-';
+                nowTime += (()=>{
+                    let m = ((new Date).getMonth()+1);
+                    if(m<10){
+                        return '0'+m;
+                    }
+                    else{
+                        return m
+                    }
+                })()
+                nowTime += '-' ;
+                nowTime += (()=>{
+                    let m = ((new Date).getDate());
+                    if(m<10){
+                        return '0'+m;
+                    }
+                    else{
+                        return m
+                    }
+                })()
+
+                //提取今日新闻
+
+                let todayNewsItem = {
+                    code:2,
+                    data:[]
+                }
+
+                for(let i=0;i<NonNews.value.length;i++){
+                    let data = NonNews.value[i].data
+                    for(let j=0;j<data.length;j++){
+
+                        let item = data[j];
+                        let SendTime = item.releaseTime.slice(0,10)
+                        if(SendTime === nowTime){
+                            TodayNews.value.push(item)
+                            NonNews.value.splice(item)
+                            console.log('today');
+                        }
+                        else{
+                            console.log('normal')
+                        }
+                    }
+                }
+
+            })
+            
         });
 
         return{
@@ -126,10 +232,11 @@ export default defineComponent({
             noMore,
             imgArr,
             load,
-            PinnedNews,
             root,
             imgBed,
-            TimeBox,
+            NonNews,
+            PinnedNews,
+            TodayNews,
         }
     }
 })
