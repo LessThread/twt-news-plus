@@ -29,21 +29,22 @@
                         :infinite-scroll-disabled="disabled"
                         > <!-- 无限滚动，注意要使用图片懒加载 -->
 
-                        <div v-for="i in count" :key="i" class="list-item">
+                        <div v-for="(item , index ) in PinnedNews" :key="item.id" class="list-item">
                             <div class="list-time">
-                                今天
+                                {{item.releaseTime}}-{{ index }}
                             </div>
                             <hr/>
                             <div class="list-inf">
                                 <div class="list-img-box">
-                                    <el-image src="https://img1.imgtp.com/2023/01/28/ZkjNaSIo.png" loading="lazy" class="list-img"/>
+                                    <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
                                 </div>
                                 <div class="list-text-box">
-                                    <p class="title">冯院叶底藏秋声 群英捧袂少年腾</p>
-                                    <p class="tag">近日新闻+社团</p>
+                                    <p class="title">{{ item.title }}</p>
+                                    <p class="tag" >tag</p>
+                                    <div v-for="(itemTag,index) in item.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
                                     <div class="foot">
-                                        <p class="writer">作者</p>
-                                        <p class="time">2022.1111.102</p>
+                                        <p class="writer">{{ item.contributorName }}</p>
+                                        <p class="time">{{item.releaseTime}}</p>
                                     </div>
                                 </div>   
                             </div>
@@ -62,25 +63,31 @@
 <script lang="ts">
 import { Options, Vue} from 'vue-class-component';
 import Sidebar from '../components/MainSidebar.vue';
-import {defineComponent,computed,ref} from 'vue'
-import {getPinnedNew} from '../api/api'
+import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from 'vue'
+import {root,imgBed,getPinnedNew} from '../api/api'
 
 
 
 
 export default defineComponent({
     components: {
-        Sidebar
+        Sidebar,
+
     },
+    name:'Main',
+
+
+
     setup(){
 
-        const imgArr = ref(['https://img1.imgtp.com/2023/01/28/TRuKTWXE.jpg',
+        const imgArr = ['https://img1.imgtp.com/2023/01/28/TRuKTWXE.jpg',
                             'https://img1.imgtp.com/2023/01/28/Eo4qcrOW.jpg',
-                            'https://img1.imgtp.com/2023/01/28/lN6g5eaI.png'])
+                            'https://img1.imgtp.com/2023/01/28/lN6g5eaI.png']
         const count = ref(10)
         const loading = ref(false)
         const noMore = computed(() => count.value >= 10)
         const disabled = computed(() => loading.value || noMore.value)
+
         const load = () => {
             loading.value = true;
             setTimeout(() => {
@@ -88,10 +95,29 @@ export default defineComponent({
                 loading.value = false
                 }, 1000)
             }
+        
+        //时间流容器，处理瀑布流的时间问题
+        let TimeBox = ref();
+        
+        //获取和处理所有置顶新闻稿
+        let  PinnedNews:any = ref()
 
-        let  PinnedNews = getPinnedNew().then(res => res);
-        console.log(PinnedNews);
+        async function setPinnedNew(){
+            await getPinnedNew()
+            .then(res=>{
+                let RequestData = JSON.parse(JSON.stringify(res))
+                PinnedNews.value = JSON.parse(JSON.stringify(res))
+                console.log(PinnedNews.value)
+            }).then(res=>{
+                console.log(res)
+                //PinnedNews.value = JSON.parse(JSON.stringify(res))
+            }).catch((res)=>{console.log(res)})
+        }
 
+        
+        onMounted(() => {
+            setPinnedNew()
+        });
 
         return{
             count,
@@ -99,7 +125,11 @@ export default defineComponent({
             disabled,
             noMore,
             imgArr,
-            load
+            load,
+            PinnedNews,
+            root,
+            imgBed,
+            TimeBox,
         }
     }
 })
