@@ -1,4 +1,4 @@
-<template
+<template>
     <div>
         <Sidebar/>
         <div class="main-view">
@@ -27,17 +27,20 @@
                         v-infinite-scroll="load"
                         class="list"
                         :infinite-scroll-disabled="disabled"
-                        > <!-- 无限滚动，注意要使用图片懒加载 -->
+                        > <!-- 伪无限滚动，注意要使用图片懒加载 -->
                         <div>
+
+                            <div class="list-time">
+                                置顶
+                            </div>
+
                             <div v-for="(item) in PinnedNews" :key="item.id" class="list-item">
-                                <div class="list-time">
-                                    置顶
-                                </div>
                                 <hr/>
                                 <div class="list-inf">
                                     <div class="list-img-box">
                                         <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
                                     </div>
+
                                     <div class="list-text-box">
                                         <p class="title">{{ item.title }}</p>
                                         <p class="tag" >tag</p>
@@ -47,13 +50,15 @@
                                             <p class="time">{{item.releaseTime}}</p>
                                         </div>
                                     </div>   
+
                                 </div>
                             </div>
     
+                            <div class="list-time" v-if="TodayNews.length">
+                                Today
+                            </div>
+
                             <div v-for="(item) in TodayNews" :key="item.id" class="list-item">
-                                <div class="list-time">
-                                    Today
-                                </div>
                                 <hr/>
                                 <div class="list-inf">
                                     <div class="list-img-box">
@@ -71,25 +76,31 @@
                                 </div>
                             </div>
 
-                            <div v-for="(item) in NonNews" :key="item.id" class="list-item">
-                                <div class="list-time">
-                                    Non
-                                </div>
+                            <div class="list-time">
+                                Non
+                            </div>
+
+                            <div v-for="(item,index) in NonNews" :key="index" class="list-item">
                                 <hr/>
-                                <div class="list-inf">
-                                    <div class="list-img-box">
-                                        <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
-                                    </div>
-                                    <div class="list-text-box">
-                                        <p class="title">{{ item.title }}</p>
-                                        <p class="tag" >tag</p>
-                                        <div v-for="(itemTag,index) in item.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
-                                        <div class="foot">
-                                            <p class="writer">{{ item.contributorName }}</p>
-                                            <p class="time">{{item.releaseTime}}</p>
+                                <div>{{ item.date }}</div>
+
+                                <div v-for="item2 in item.member" :key="item2.id">
+                                    <div class="list-inf">
+                                        <div class="list-img-box">
+                                            <el-image :src="root+imgBed+item2.coverImageId" loading="lazy" class="list-img"/>
                                         </div>
-                                    </div>   
+                                        <div class="list-text-box">
+                                            <p class="title">{{ item2.title }}</p>
+                                            <p class="tag" >tag</p>
+                                            <div v-for="(itemTag,index) in item2.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
+                                            <div class="foot">
+                                                <p class="writer">{{ item2.contributorName }}</p>
+                                                <p class="time">{{item2.releaseTime}}</p>
+                                            </div>
+                                        </div>   
+                                    </div>
                                 </div>
+                                
                             </div>
 
 
@@ -146,7 +157,8 @@ export default defineComponent({
     
         const PinnedNews = ref([] as Array<any>);
         const TodayNews = ref([] as Array<any>);
-        const NonNews = ref([] as Array<any>);
+        let NonNews = ref([] as Array<any>);
+        let NonTimeBox = ref([] as Array<any>);
 
         //获取和处理所有置顶新闻稿
         async function setPinnedNew(){
@@ -197,21 +209,48 @@ export default defineComponent({
                 })()
 
                 //提取今日新闻
-                for(let i=0;i<NonNews.value.length;i++){
-                    let data = NonNews.value[i].data
-                    for(let j=0;j<data.length;j++){
 
+                    let data = NonNews.value
+                    for(let j=0;j<data.length;j++){
                         let item = data[j];
                         let SendTime = item.releaseTime.slice(0,10)
                         if(SendTime === nowTime){
-                            TodayNews.value.push(item)
-                            NonNews.value.splice(item)
+                            TodayNews.value.push(item);
                         }
                         else{
-                            console.log('normal')
+                            NonTimeBox.value.push(item);
                         }
                     }
+
+                //对其他Non类新闻做时间线划分处理（这里按日期归类）
+                let DateBox:Array<DateItem> = [];
+                interface DateItem{
+                    date:string,
+                    member:any
                 }
+                let DateCacheMap = new Map();
+
+                for(let i=0;i<NonTimeBox.value.length;i++){
+                    let item = NonTimeBox.value[i]
+                    if(DateCacheMap.has(item.releaseTime.slice(0,10))){
+                        DateBox[DateCacheMap.get(item.releaseTime.slice(0,10))].member.push(item);
+                    }
+                    else{
+                        let $PushItem:DateItem = {
+                            date:item.releaseTime.slice(0,10),
+                            member:[]
+                        }
+                        $PushItem.member.push(item)
+                        DateBox.push($PushItem);
+                        DateCacheMap.set(item.releaseTime.slice(0,10),DateCacheMap.size)
+                    }
+                }
+
+                console.log(DateBox)
+                console.log(DateCacheMap)
+
+                NonNews.value = [];
+                NonNews.value = DateBox;
 
             })
             
@@ -278,16 +317,18 @@ export default defineComponent({
             margin: 2vh auto;
             width: 95%;
 
+            .list-time{
+                margin-bottom: 0;
+                font-size: 40px;
+            }
+
             .list-item{
                 background-color: rgba(245, 249, 248, 0.323);
                 position: relative;
                 margin: 5vh auto;
                 min-height: 25vh;
                 width: 100%;
-                .list-time{
-                    margin-bottom: 0;
-                    font-size: 40px;
-                }
+                
                 .list-inf{
                     margin: 0 auto;
                     display: flex;
