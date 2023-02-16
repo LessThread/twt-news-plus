@@ -3,7 +3,7 @@
         <div class="icon-background">
             &emsp;
         </div>
-        <div class="icon-box">
+        <div class="icon-box" @click="turn2Home">
             <img src="../assets/icon.svg" class="icon"/>
             <img src="../assets/TWTNews.svg" class="title" />
         </div>
@@ -33,27 +33,30 @@
 </template>
 
 <script lang="ts">
-import { Options, Vue} from 'vue-class-component';
+import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from 'vue'
+import router from '@/router';
 
-@Options({
-    props: {
-        input:String
+export default defineComponent({
+    name:'Header',
+    setup(){
+        let input = ref()
+        function turn2Home(){
+            router.push('/');
+        }
+        return{
+            turn2Home,
+            input
+        }
     }
 })
-
-
-export default class Header extends Vue {
-    input!: string;
-
-}
 </script>
 
 
 <style lang="less" scoped>
 
 @width: 3vw;
-@left-dis: 20vw;
-@search-box-width:52vw;
+@left-dis: 18vw;
+@search-box-width:57vw;
 
 
 .header-bar{
@@ -114,8 +117,8 @@ export default class Header extends Vue {
         display: flex;
         justify-content: space-between;
         position: absolute;
-        left: @left-dis+@search-box-width + 7vw;
-        width: 19vw;
+        left: @left-dis+@search-box-width + 5vw;
+        width: 18vw;
         top: 3vh;
     }
 }
