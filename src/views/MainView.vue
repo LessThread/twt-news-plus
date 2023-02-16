@@ -35,7 +35,7 @@
                             </div>
 
                             <template v-for="(item) in PinnedNews" :key="item.id">
-                                <div class="list-item" @click="turnToDisplay(item.id)" v-if="(item.categoryId === Filter) || Filter === 0">
+                                <div class="list-item" @click="turnToDisplay(item.id)" v-if="FilterFunc(item.categoryId,2)">
                                     <hr/>
                                     <div class="list-inf">
                                         <div class="list-img-box">
@@ -66,7 +66,7 @@
                             </div>
 
                             <template v-for="(item) in TodayNews" :key="item.id">
-                                <div class="list-item" @click="turnToDisplay(item.id)" v-if="(item.categoryId === Filter) || Filter === 0">
+                                <div class="list-item" @click="turnToDisplay(item.id)" v-if="FilterFunc(item.categoryId,1)">
                                     <hr/>
                                     <div class="list-inf">
                                         <div class="list-img-box">
@@ -98,7 +98,7 @@
                                 <hr/>
                                 <div>{{ item.date }}</div>
                                 <template v-for="item2 in item.member" :key="item2.id">
-                                    <div class="list-item" @click="turnToDisplay(item2.id)" v-if="(item2.categoryId === Filter) || Filter === 0">
+                                    <div class="list-item" @click="turnToDisplay(item2.id)" v-if="FilterFunc(item2.categoryId,3)">
                                         <div class="list-inf">
                                             <div class="list-img-box">
                                                 <el-image :src="root+imgBed+item2.coverImageId" loading="lazy" class="list-img"/>
@@ -165,7 +165,8 @@ export default defineComponent({
         const noMore = computed(() => count.value >= 10)
         const disabled = computed(() => loading.value || noMore.value)
         const store = useStore(); 
-        const Filter = computed(() => store.state.ArtFilter)
+        const filter = computed(() => store.state.ArtFilter)
+        const Filter = ref(filter)
         console.log(Filter.value)
         console.log(store.state.ArtFilter)
 
@@ -203,6 +204,21 @@ export default defineComponent({
         //路由跳转函数
         function turnToDisplay(num:number){
             router.push('/Display?='+num)
+        }
+
+        //筛选比较器
+        function FilterFunc(id:number|string,num:number){
+            console.log("if called")
+            console.log(id)
+            if(typeof id === 'string'){id = Number(id)}
+            if(Filter.value === 0){return true}
+            if(id === Filter.value){
+                return true;
+            }
+            else{
+                store.commit('changeNewsHiddenNum',num);
+                return false;
+            }
         }
 
         
@@ -299,7 +315,8 @@ export default defineComponent({
             TodayNews,
 
             turnToDisplay,
-            Filter
+            Filter,
+            FilterFunc
         }
     }
 })
