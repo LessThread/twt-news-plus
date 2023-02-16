@@ -34,7 +34,7 @@
                                 置顶
                             </div>
 
-                            <div v-for="(item) in PinnedNews" :key="item.id" class="list-item">
+                            <div v-for="(item) in PinnedNews" :key="item.id" class="list-item" @click="turnToDisplay">
                                 <hr/>
                                 <div class="list-inf">
                                     <div class="list-img-box">
@@ -80,11 +80,11 @@
                                 Non
                             </div>
 
-                            <div v-for="(item,index) in NonNews" :key="index" class="list-item">
+                            <div v-for="(item,index) in NonNews" :key="index" class="non-time-box">
                                 <hr/>
                                 <div>{{ item.date }}</div>
 
-                                <div v-for="item2 in item.member" :key="item2.id">
+                                <div v-for="item2 in item.member" :key="item2.id" class="list-item">
                                     <div class="list-inf">
                                         <div class="list-img-box">
                                             <el-image :src="root+imgBed+item2.coverImageId" loading="lazy" class="list-img"/>
@@ -124,6 +124,7 @@ import Sidebar from '../components/MainSidebar.vue';
 import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from 'vue'
 import {root,imgBed,getPinnedNew,getNonTopNews} from '../api/api'
 import { now } from 'lodash';
+import router from '@/router';
 
 
 
@@ -176,6 +177,11 @@ export default defineComponent({
                 let RequestData = JSON.parse(JSON.stringify(res))
                 NonNews.value = RequestData
             }).catch((res)=>{console.log(res)})
+        }
+
+        //路由跳转函数
+        function turnToDisplay(){
+            router.push('/Display')
         }
 
         
@@ -268,6 +274,7 @@ export default defineComponent({
             NonNews,
             PinnedNews,
             TodayNews,
+            turnToDisplay,
         }
     }
 })
@@ -313,7 +320,7 @@ export default defineComponent({
     .view-text{
         width: 100%;
         .infinite-list-wrapper{
-            background-color: #FFA156;
+            background-color: #918e8c89;
             margin: 2vh auto;
             width: 95%;
 
@@ -323,7 +330,7 @@ export default defineComponent({
             }
 
             .list-item{
-                background-color: rgba(245, 249, 248, 0.323);
+                background-color: rgba(104, 109, 108, 0.323);
                 position: relative;
                 margin: 5vh auto;
                 min-height: 25vh;
@@ -336,7 +343,7 @@ export default defineComponent({
                         position: relative;
                         overflow: hidden;
                         width: 30%;
-                        background-color: red;
+                        background-color: rgba(144, 142, 142, 0.562);
                     }
                     .list-text-box{
                         width: 70%;
