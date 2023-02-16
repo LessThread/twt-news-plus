@@ -31,57 +31,64 @@
                         <div>
 
                             <div class="list-time">
-                                置顶 + {{ Filter }}
+                                置顶
                             </div>
 
-                            <div v-for="(item) in PinnedNews" :key="item.id" class="list-item" @click="turnToDisplay(item.id)">
-                                <hr/>
-                                <div class="list-inf">
-                                    <div class="list-img-box">
-                                        <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
+                            <template v-for="(item) in PinnedNews" :key="item.id">
+                                <div class="list-item" @click="turnToDisplay(item.id)" v-if="(item.categoryId === Filter) || Filter === 0">
+                                    <hr/>
+                                    <div class="list-inf">
+                                        <div class="list-img-box">
+                                            <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
+                                        </div>
+    
+                                        <div class="list-text-box">
+                                            <p class="title">{{ item.title }}</p>
+                                            <div class="tag" >
+                                                <p v-for="(itemTag,index) in item.tagNameList" :key="index" style="display:inline;">
+                                                    {{ itemTag }} &emsp; 
+                                                </p>
+                                            </div>
+                                            <div class="foot">
+                                                <p class="writer">{{ item.contributorName }}</p>
+                                                <p class="time">{{item.releaseTime}}</p>
+                                            </div>
+                                        </div>   
+    
                                     </div>
-
-                                    <div class="list-text-box">
-                                        <p class="title">{{ item.title }}</p>
-                                        <div class="tag" >
-                                            <p v-for="(itemTag,index) in item.tagNameList" :key="index" style="display:inline;">
-                                                {{ itemTag }} &emsp; 
-                                            </p>
-                                        </div>
-                                        <div class="foot">
-                                            <p class="writer">{{ item.contributorName }}</p>
-                                            <p class="time">{{item.releaseTime}}</p>
-                                        </div>
-                                    </div>   
-
                                 </div>
-                            </div>
+                            </template>
+
+                            
     
                             <div class="list-time" v-if="TodayNews.length" >
                                 Today
                             </div>
 
-                            <div v-for="(item) in TodayNews" :key="item.id" class="list-item" @click="turnToDisplay(item.id)">
-                                <hr/>
-                                <div class="list-inf">
-                                    <div class="list-img-box">
-                                        <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
+                            <template v-for="(item) in TodayNews" :key="item.id">
+                                <div class="list-item" @click="turnToDisplay(item.id)" v-if="(item.categoryId === Filter) || Filter === 0">
+                                    <hr/>
+                                    <div class="list-inf">
+                                        <div class="list-img-box">
+                                            <el-image :src="root+imgBed+item.coverImageId" loading="lazy" class="list-img"/>
+                                        </div>
+                                        <div class="list-text-box">
+                                            <p class="title">{{ item.title }}</p>
+                                            <div class="tag" >
+                                                <p v-for="(itemTag,index) in item.tagNameList" :key="index" style="display:inline;">
+                                                    {{ itemTag }} &emsp; 
+                                                </p>
+                                            </div>
+                                            
+                                            <div class="foot">
+                                                <p class="writer">{{ item.contributorName }}</p>
+                                                <p class="time">{{item.releaseTime}}</p>
+                                            </div>
+                                        </div>   
                                     </div>
-                                    <div class="list-text-box">
-                                        <p class="title">{{ item.title }}</p>
-                                        <div class="tag" >
-                                            <p v-for="(itemTag,index) in item.tagNameList" :key="index" style="display:inline;">
-                                                {{ itemTag }} &emsp; 
-                                            </p>
-                                        </div>
-                                        
-                                        <div class="foot">
-                                            <p class="writer">{{ item.contributorName }}</p>
-                                            <p class="time">{{item.releaseTime}}</p>
-                                        </div>
-                                    </div>   
                                 </div>
-                            </div>
+                            </template>
+                            
 
                             <div class="list-time">
                                 Non
@@ -90,27 +97,27 @@
                             <div v-for="(item,index) in NonNews" :key="index" class="non-time-box">
                                 <hr/>
                                 <div>{{ item.date }}</div>
-
-                                <div v-for="item2 in item.member" :key="item2.id" class="list-item" @click="turnToDisplay(item2.id)">
-                                    <div class="list-inf">
-                                        <div class="list-img-box">
-                                            <el-image :src="root+imgBed+item2.coverImageId" loading="lazy" class="list-img"/>
+                                <template v-for="item2 in item.member" :key="item2.id">
+                                    <div class="list-item" @click="turnToDisplay(item2.id)" v-if="(item2.categoryId === Filter) || Filter === 0">
+                                        <div class="list-inf">
+                                            <div class="list-img-box">
+                                                <el-image :src="root+imgBed+item2.coverImageId" loading="lazy" class="list-img"/>
+                                            </div>
+                                            <div class="list-text-box">
+                                                <p class="title">{{ item2.title }}</p>
+                                                <div class="tag" >
+                                                    <p v-for="(itemTag,index) in item2.tagNameList" :key="index" style="display:inline;">
+                                                        {{ itemTag }}&emsp;
+                                                    </p>
+                                                </div>
+                                                <div class="foot">
+                                                    <p class="writer">{{ item2.contributorName }}</p>
+                                                    <p class="time">{{item2.releaseTime}}</p>
+                                                </div>
+                                            </div>   
                                         </div>
-                                        <div class="list-text-box">
-                                            <p class="title">{{ item2.title }}</p>
-                                            <div class="tag" >
-                                                <p v-for="(itemTag,index) in item2.tagNameList" :key="index" style="display:inline;">
-                                                    {{ itemTag }}&emsp;
-                                                </p>
-                                            </div>
-                                            <div class="foot">
-                                                <p class="writer">{{ item2.contributorName }}</p>
-                                                <p class="time">{{item2.releaseTime}}</p>
-                                            </div>
-                                        </div>   
                                     </div>
-                                </div>
-                                
+                                </template>
                             </div>
 
 
@@ -290,7 +297,7 @@ export default defineComponent({
             NonNews,
             PinnedNews,
             TodayNews,
-            
+
             turnToDisplay,
             Filter
         }

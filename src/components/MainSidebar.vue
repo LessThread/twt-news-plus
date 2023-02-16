@@ -2,6 +2,7 @@
     <div class="sidebar">
         <div class="title-box" v-for="(item, index) in titles" :key="index">
             <el-button type="primary" class="title"
+            @click="changeFilter(index)"
             plain
             >
                 <img :src="img_src[index]" class="title-img"/>
@@ -14,6 +15,7 @@
 <script lang="ts">
 import { Options, Vue} from 'vue-class-component';
 import { defineComponent, ref } from "vue";
+import { useStore } from 'vuex'
 
 export default defineComponent({
     setup() {
@@ -26,9 +28,15 @@ export default defineComponent({
                     require('../assets/tag.svg'),
                     require('../assets/file-minus.svg'),
                     ])
+        
+        const Store = useStore()
+        function changeFilter(index:number){
+            Store.commit('changeArtFilter',index);
+        }
         return {
             titles,
-            img_src
+            img_src,
+            changeFilter
         };
     },
 })
