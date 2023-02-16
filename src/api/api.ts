@@ -1,7 +1,8 @@
 const root = 'http://8.130.96.252/';
 const imgBed = 'imgbed/download/'
 const PinnedNew = 'art/select/summary/top/';
-const NonTopNews = 'art/select/summary/nor/'
+const NonTopNews = 'art/select/summary/nor/';
+const News = 'art/select/'  
 
 async function getPinnedNew(){
     const url = root + PinnedNew;
@@ -21,11 +22,21 @@ async function getNonTopNews(){
         return t;
 }
 
+async function getNews(id:string){
+    const url = root + News + id;
+    const t = await fetch(url)
+        .then(res=>res.json())
+            .then(res => {return res.result})
+        //console.log(t)
+        return t;
+}
+
 
 
 export{
     getPinnedNew,
     getNonTopNews,
     root,
-    imgBed
+    imgBed,
+    getNews
 }

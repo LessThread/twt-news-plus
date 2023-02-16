@@ -31,10 +31,10 @@
                         <div>
 
                             <div class="list-time">
-                                置顶
+                                置顶 + {{ Filter }}
                             </div>
 
-                            <div v-for="(item) in PinnedNews" :key="item.id" class="list-item" @click="turnToDisplay">
+                            <div v-for="(item) in PinnedNews" :key="item.id" class="list-item" @click="turnToDisplay(item.id)">
                                 <hr/>
                                 <div class="list-inf">
                                     <div class="list-img-box">
@@ -43,8 +43,11 @@
 
                                     <div class="list-text-box">
                                         <p class="title">{{ item.title }}</p>
-                                        <p class="tag" >tag</p>
-                                        <div v-for="(itemTag,index) in item.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
+                                        <div class="tag" >
+                                            <p v-for="(itemTag,index) in item.tagNameList" :key="index" style="display:inline;">
+                                                {{ itemTag }} &emsp; 
+                                            </p>
+                                        </div>
                                         <div class="foot">
                                             <p class="writer">{{ item.contributorName }}</p>
                                             <p class="time">{{item.releaseTime}}</p>
@@ -54,11 +57,11 @@
                                 </div>
                             </div>
     
-                            <div class="list-time" v-if="TodayNews.length">
+                            <div class="list-time" v-if="TodayNews.length" >
                                 Today
                             </div>
 
-                            <div v-for="(item) in TodayNews" :key="item.id" class="list-item">
+                            <div v-for="(item) in TodayNews" :key="item.id" class="list-item" @click="turnToDisplay(item.id)">
                                 <hr/>
                                 <div class="list-inf">
                                     <div class="list-img-box">
@@ -66,8 +69,12 @@
                                     </div>
                                     <div class="list-text-box">
                                         <p class="title">{{ item.title }}</p>
-                                        <p class="tag" >tag</p>
-                                        <div v-for="(itemTag,index) in item.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
+                                        <div class="tag" >
+                                            <p v-for="(itemTag,index) in item.tagNameList" :key="index" style="display:inline;">
+                                                {{ itemTag }} &emsp; 
+                                            </p>
+                                        </div>
+                                        
                                         <div class="foot">
                                             <p class="writer">{{ item.contributorName }}</p>
                                             <p class="time">{{item.releaseTime}}</p>
@@ -84,15 +91,18 @@
                                 <hr/>
                                 <div>{{ item.date }}</div>
 
-                                <div v-for="item2 in item.member" :key="item2.id" class="list-item">
+                                <div v-for="item2 in item.member" :key="item2.id" class="list-item" @click="turnToDisplay(item2.id)">
                                     <div class="list-inf">
                                         <div class="list-img-box">
                                             <el-image :src="root+imgBed+item2.coverImageId" loading="lazy" class="list-img"/>
                                         </div>
                                         <div class="list-text-box">
                                             <p class="title">{{ item2.title }}</p>
-                                            <p class="tag" >tag</p>
-                                            <div v-for="(itemTag,index) in item2.tagNameList" :key="index">{{ itemTag }}+{{ index }}</div>
+                                            <div class="tag" >
+                                                <p v-for="(itemTag,index) in item2.tagNameList" :key="index" style="display:inline;">
+                                                    {{ itemTag }}&emsp;
+                                                </p>
+                                            </div>
                                             <div class="foot">
                                                 <p class="writer">{{ item2.contributorName }}</p>
                                                 <p class="time">{{item2.releaseTime}}</p>
@@ -110,7 +120,7 @@
 
                     </div>
                     <p v-if="loading">Loading...</p>
-                    <p v-if="noMore" class="end-text">...再也没有更多了...</p>
+                    <p v-if="noMore" class="end-text">...No More...</p>
                 </div>
             </div>
 
@@ -125,7 +135,7 @@ import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from
 import {root,imgBed,getPinnedNew,getNonTopNews} from '../api/api'
 import { now } from 'lodash';
 import router from '@/router';
-
+import { useStore } from 'vuex'
 
 
 
@@ -147,6 +157,10 @@ export default defineComponent({
         const loading = ref(false)
         const noMore = computed(() => count.value >= 10)
         const disabled = computed(() => loading.value || noMore.value)
+        const store = useStore(); 
+        const Filter = computed(() => store.state.ArtFilter)
+        console.log(Filter.value)
+        console.log(store.state.ArtFilter)
 
         const load = () => {
             loading.value = true;
@@ -180,8 +194,8 @@ export default defineComponent({
         }
 
         //路由跳转函数
-        function turnToDisplay(){
-            router.push('/Display')
+        function turnToDisplay(num:number){
+            router.push('/Display?='+num)
         }
 
         
@@ -269,12 +283,16 @@ export default defineComponent({
             noMore,
             imgArr,
             load,
+
             root,
             imgBed,
+
             NonNews,
             PinnedNews,
             TodayNews,
+            
             turnToDisplay,
+            Filter
         }
     }
 })
@@ -286,7 +304,7 @@ export default defineComponent({
 @border-r : 8px;
 @main-view-width : 60vw;
 .main-view{
-    background-color: rgba(133, 136, 134, 0.469);
+    background-color:  #ffffff;
     position: absolute;
     z-index: -1;
     left: 18.5vw;
@@ -320,7 +338,7 @@ export default defineComponent({
     .view-text{
         width: 100%;
         .infinite-list-wrapper{
-            background-color: #918e8c89;
+            background-color:  #ffffff;
             margin: 2vh auto;
             width: 95%;
 
@@ -330,7 +348,7 @@ export default defineComponent({
             }
 
             .list-item{
-                background-color: rgba(104, 109, 108, 0.323);
+                background-color:  #ffffff;
                 position: relative;
                 margin: 5vh auto;
                 min-height: 25vh;
@@ -343,7 +361,7 @@ export default defineComponent({
                         position: relative;
                         overflow: hidden;
                         width: 30%;
-                        background-color: rgba(144, 142, 142, 0.562);
+                        background-color:  #ffffff;
                     }
                     .list-text-box{
                         width: 70%;
@@ -354,14 +372,17 @@ export default defineComponent({
                             font-size: 36px;
                         }
                         .tag{
+                            
                             margin-left: 1vw;
+                            
+                            margin-bottom: 1vw;
                         }
                         .foot{
                             margin-left: 1vw;
-                            width: 67%;
+                            width: 96%;
                             display: flex;
                             justify-content: space-between;
-                            position: absolute;
+                            /*position: absolute;*/
                             bottom: 0;
                             
                         }

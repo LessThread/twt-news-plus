@@ -30,12 +30,11 @@ export default class Home extends Vue {}
 </script>
 
 <style lang="less" scoped>
-@backgroundcolor : #fafafa;
 
 .recommend{
   position: fixed;
-  background-color: @backgroundcolor;
-
+  background-color: #ffffff;
+  z-index: 9;
   top: 10vh;
   right: 0vw;
   height: 90vh;
@@ -44,7 +43,7 @@ export default class Home extends Vue {}
 
 .MainView{
   position: absolute;
-  background-color: rgba(118, 116, 116, 0.549);
+  background-color:  #ffffff;
 
   top: 10vh;
   left: 0vw;
@@ -54,10 +53,11 @@ export default class Home extends Vue {}
 
 .header{
   position: fixed;
-  background-color: @backgroundcolor;
+  background-color: #ffffff;
   top: 0vw;
   left: 0;
   width: 100vw;
   height: 10vh;
+  z-index: 9;
 }
 </style>

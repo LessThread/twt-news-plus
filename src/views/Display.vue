@@ -23,9 +23,10 @@
                     <div class="text-img-box">
                         <el-image src="https://i.328888.xyz/2023/01/22/O5Qfo.jpeg" class="text-img"/>
                     </div>
-                    <div>
-                        <div v-for="index in 25" :key="index">{{ index }}hi</div>
+
+                    <div v-html="News" class="text-main">
                     </div>
+
                 </div>
             </div>
         </div>
@@ -34,11 +35,35 @@
 
 <script lang="ts">
 import { Options, Vue} from 'vue-class-component';
-import { defineComponent, ref } from "vue";
+import { defineComponent, ref ,onMounted } from "vue";
+import router from '@/router';
+import {getNews} from '../api/api'
+import { indexOf } from 'lodash';
+
 
 export default defineComponent({
     setup() {
+        let News = ref('Loading')
+
+        async function displayNews(){
+            let url = router.currentRoute.value.fullPath;
+            const id = url.slice(url.indexOf('?')+2);
+            
+            await getNews(id)
+                .then(res =>{
+                    console.log(res)
+                    News.value = res.text
+                    console.log(News)
+                })
+
+            }
+
+        onMounted(() => {
+            displayNews()
+        }); 
+
         return {
+            News,
         };
     },
 })
@@ -47,7 +72,8 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .display{
-    z-index: -1;
+    position: relative;
+    z-index: 0;
 }
 
 .content{
@@ -72,6 +98,8 @@ export default defineComponent({
     .text{
         width: 78%;
         background-color: rgba(36, 102, 80, 0.367);
+        position: relative;
+        z-index: -1;
         .text-img-box{
             width: 100%;
             overflow: hidden;
@@ -79,6 +107,10 @@ export default defineComponent({
         }
         .text-img{
             width: 100%;
+        }
+
+        .text-main{
+            
         }
     }
 }
