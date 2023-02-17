@@ -2,7 +2,7 @@
     <div class="display">
 
         <div class="title">
-            冯院叶底藏秋声 群英捧袂少年腾
+            {{Title}}
         </div>
 
         <div class="content">
@@ -21,7 +21,7 @@
             <div class="text">
                 <div>
                     <div class="text-img-box">
-                        <el-image src="https://i.328888.xyz/2023/01/22/O5Qfo.jpeg" class="text-img"/>
+                        <el-image :src="imgID" class="text-img"/>
                     </div>
 
                     <div v-html="News" class="text-main">
@@ -37,13 +37,15 @@
 import { Options, Vue} from 'vue-class-component';
 import { defineComponent, ref ,onMounted } from "vue";
 import router from '@/router';
-import {getNews} from '../api/api'
+import {getNews,displayImg} from '../api/api'
 import { indexOf } from 'lodash';
 
 
 export default defineComponent({
     setup() {
-        let News = ref('Loading')
+        const News = ref('Loading')
+        const Title = ref('')
+        const imgID = ref('')
 
         async function displayNews(){
             let url = router.currentRoute.value.fullPath;
@@ -51,9 +53,10 @@ export default defineComponent({
             
             await getNews(id)
                 .then(res =>{
-                    console.log(res)
                     News.value = res.text
-                    console.log(News)
+                    Title.value = res.title
+                    imgID.value = displayImg(res.bannerImageId);
+                    console.log(res)
                 })
 
             }
@@ -64,6 +67,8 @@ export default defineComponent({
 
         return {
             News,
+            Title,
+            imgID
         };
     },
 })
@@ -78,6 +83,8 @@ export default defineComponent({
 
     .title{
         font-size: 64px;
+        margin-left: 1vw;
+
     }
 }
 
@@ -89,7 +96,7 @@ export default defineComponent({
     padding-right: 1%;
     .side{
         width: 18%;
-        background-color: aquamarine;
+        border-style: dashed;
     }
     .line{
         width: 2%;

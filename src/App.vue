@@ -4,8 +4,10 @@
       </div>
 
       <div class="MainView">
-        <router-view>
-        </router-view>
+        <keep-alive>
+          <router-view v-if="$route.meta.keepAlive" />
+        </keep-alive>
+        <router-view v-if="!$route.meta.keepAlive"/>
       </div>
 
       <div class="recommend">

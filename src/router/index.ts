@@ -12,7 +12,10 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/MainView',
     name: 'MainView',
-    component: () => import('../views/MainView.vue')
+    component: () => import('../views/MainView.vue'),
+    meta: {
+      keepAlive:false
+    }
   },
   {
     path: '/Display',
