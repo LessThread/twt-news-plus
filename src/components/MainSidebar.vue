@@ -1,13 +1,15 @@
 <template>
     <div class="sidebar">
-        <div class="title-box" v-for="(item, index) in titles" :key="index">
+        <div class="title-box" v-for="(item, index) in titles" :key="index" :class="{'hitButton' : isHit[index]}">
+
             <el-button type="primary" class="title"
             @click="changeFilter(index)"
-            plain
+            :class="{'hitButton' : isHit[index]}"
             >
                 <img :src="img_src[index]" class="title-img"/>
                 <p class="title-text">{{ item }}</p>
             </el-button>
+
         </div>
     </div>
 </template>
@@ -19,6 +21,7 @@ import { useStore } from 'vuex'
 
 export default defineComponent({
     setup() {
+        //此处在将来留下接口以支持网络请求和编辑
         const titles =  ref(['全部','竞赛','社团公告','通知','活动','新闻']);
         const img_src = ref([
                     require('../assets/calendar.svg'),
@@ -29,21 +32,33 @@ export default defineComponent({
                     require('../assets/file-minus.svg'),
                     ])
         
+        const isHit = ref([0,0,0,0,0,0])
+
         const Store = useStore()
         function changeFilter(index:number){
             Store.commit('changeArtFilter',index);
+            for(let i=0;i<isHit.value.length;i++){
+                isHit.value[i] = 0;
+            }
+            isHit.value[index] = 1;
+
         }
         return {
             titles,
             img_src,
-            changeFilter
+            changeFilter,
+            isHit
         };
     },
 })
 
 </script>
 
+
+
 <style lang="less" scoped>
+
+
 .sidebar{
     position: fixed;
     background-color: #FAFAFA;
@@ -70,6 +85,7 @@ export default defineComponent({
         .title{
             border-radius: 0;
             width: 100%;
+            height: 100%;
             text-align: center;
             display: flex;
             justify-content: space-between;
@@ -81,5 +97,11 @@ export default defineComponent({
             }
         }
     }
+}
+</style>
+
+<style lang="less" scoped>
+.hitButton{
+    background-color: #7676761d !important ;
 }
 </style>
