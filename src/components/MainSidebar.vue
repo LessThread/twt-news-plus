@@ -5,6 +5,7 @@
             <el-button type="primary" class="title"
             @click="changeFilter(index)"
             :class="{'hitButton' : isHit[index]}"
+            text
             >
                 <img :src="img_src[index]" class="title-img"/>
                 <p class="title-text">{{ item }}</p>
@@ -93,7 +94,12 @@ export default defineComponent({
             background-color: #FAFAFA;
             color:#2a2a2a;
             .title-text{
+                width:100%;
                 margin-left: 1vw;
+                text-align: left;
+            }
+            .title-img{
+                margin-left: 2vw;
             }
         }
     }

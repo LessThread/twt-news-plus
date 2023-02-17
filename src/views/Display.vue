@@ -8,9 +8,9 @@
         <div class="content">
 
             <div class="side">
-                <div>time</div>
-                <div>tag</div>
-                <div>writer</div>
+                <div>2022</div>
+                <div>11.05</div>
+                <div>10:38</div>
                 <div>QR</div>
             </div>
 
@@ -74,6 +74,11 @@ export default defineComponent({
 .display{
     position: relative;
     z-index: 0;
+    margin-left: 5vw;
+
+    .title{
+        font-size: 64px;
+    }
 }
 
 .content{
@@ -114,4 +119,7 @@ export default defineComponent({
         }
     }
 }
+</style>
+
+<style>
 </style>

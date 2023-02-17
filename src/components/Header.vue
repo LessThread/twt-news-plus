@@ -1,6 +1,6 @@
 <template>
     <div class="header-bar">
-        <div class="icon-background">
+        <div class="icon-background" :class="{'icon-background-hit':color}">
             &emsp;
         </div>
         <div class="icon-box" @click="turn2Home">
@@ -35,19 +35,36 @@
 <script lang="ts">
 import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from 'vue'
 import router from '@/router';
+import { useRouter } from 'vue-router';
 
 export default defineComponent({
     name:'Header',
     setup(){
         let input = ref()
+        let color = ref(0);
         function turn2Home(){
             router.push('/');
         }
+
+        watch(()=>router.currentRoute.value.fullPath,()=>{
+            let url:string = router.currentRoute.value.fullPath;
+            console.log(url.indexOf('Display'))
+            if(url.indexOf('Display') !== -1){
+                color.value = 1;
+            }
+            else{
+                color.value = 0;
+            }
+
+        })
         return{
             turn2Home,
-            input
+            input,
+            color
         }
+    
     }
+
 })
 </script>
 
@@ -102,6 +119,7 @@ export default defineComponent({
         max-height: 50%;
         .icon{
             position: absolute;
+            left: 1vw;
             width: 100%;
             height: 100%;
         }
@@ -109,7 +127,7 @@ export default defineComponent({
             position: absolute;
             width: 250%;
             height: 100%;
-            left: 120%;
+            left: 160%;
         }
     }
 
@@ -123,4 +141,10 @@ export default defineComponent({
     }
 }
 
+</style>
+
+<style>
+.icon-background-hit{
+    background-color: #ffffff !important
+}
 </style>
