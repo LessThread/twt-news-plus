@@ -30,7 +30,7 @@
                         > <!-- 伪无限滚动，注意要使用图片懒加载 -->
                         <div>
 
-                            <div class="list-time">
+                            <div class="list-time" v-if="PinnedNews.length">
                                 置顶
                             </div>
 
@@ -90,7 +90,7 @@
                             </template>
                             
 
-                            <div class="list-time">
+                            <div class="list-time" v-if="NonNews.length">
                                 Non
                             </div>
 
