@@ -35,7 +35,7 @@
                             </div>
 
                             <template v-for="(item) in PinnedNews" :key="item.id">
-                                <div class="list-item" @click="turnToDisplay(item.id)" v-if="FilterFunc(item.categoryId,2)">
+                                <div class="list-item" @click="turnToDisplay(item.id)">
                                     <hr/>
                                     <div class="list-inf">
                                         <div class="list-img-box">
@@ -66,7 +66,7 @@
                             </div>
 
                             <template v-for="(item) in TodayNews" :key="item.id">
-                                <div class="list-item" @click="turnToDisplay(item.id)" v-if="FilterFunc(item.categoryId,1)">
+                                <div class="list-item" @click="turnToDisplay(item.id)" >
                                     <hr/>
                                     <div class="list-inf">
                                         <div class="list-img-box">
@@ -98,7 +98,7 @@
                                 <hr/>
                                 <div>{{ item.date }}</div>
                                 <template v-for="item2 in item.member" :key="item2.id">
-                                    <div class="list-item" @click="turnToDisplay(item2.id)" v-if="FilterFunc(item2.categoryId,3)">
+                                    <div class="list-item" @click="turnToDisplay(item2.id)">
                                         <div class="list-inf">
                                             <div class="list-img-box">
                                                 <el-image :src="root+imgBed+item2.coverImageId" loading="lazy" class="list-img"/>
@@ -138,7 +138,7 @@
 <script lang="ts">
 import { Options, Vue} from 'vue-class-component';
 import Sidebar from '../components/MainSidebar.vue';
-import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from 'vue'
+import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef,onBeforeUpdate} from 'vue'
 import {root,imgBed,getPinnedNew,getNonTopNews} from '../api/api'
 import { now } from 'lodash';
 import router from '@/router';
@@ -165,11 +165,21 @@ export default defineComponent({
         const noMore = computed(() => count.value >= 10)
         const disabled = computed(() => loading.value || noMore.value)
         const store = useStore(); 
-        const filter = computed(() => store.state.ArtFilter)
-        const Filter = ref(filter)
-        console.log(Filter.value)
-        console.log(store.state.ArtFilter)
 
+        const Filter = computed(() => store.state.ArtFilter)
+        const filter = ref(Filter.value)
+        
+
+
+        let $PINNEDNEWS:any;
+        let $TODAYNEWS:any;
+        let $NONNEWS:any;
+
+        let PinnedNews = ref([] as Array<any>);
+        let TodayNews = ref([] as Array<any>);
+        let NonNews = ref([] as Array<any>);
+        let NonTimeBox = ref([] as Array<any>);
+                        
         const load = () => {
             loading.value = true;
             setTimeout(() => {
@@ -177,11 +187,6 @@ export default defineComponent({
                 loading.value = true
                 }, 1000)
             }
-    
-        const PinnedNews = ref([] as Array<any>);
-        const TodayNews = ref([] as Array<any>);
-        let NonNews = ref([] as Array<any>);
-        let NonTimeBox = ref([] as Array<any>);
 
         //获取和处理所有置顶新闻稿
         async function setPinnedNew(){
@@ -207,19 +212,70 @@ export default defineComponent({
         }
 
         //筛选比较器
-        function FilterFunc(id:number|string,num:number){
-            console.log("if called")
-            console.log(id)
-            if(typeof id === 'string'){id = Number(id)}
-            if(Filter.value === 0){return true}
-            if(id === Filter.value){
-                return true;
+
+        watch(() => store.state.ArtFilter,(newVal, oldVal)=>{
+            if(!$PINNEDNEWS)return
+
+            PinnedNews.value = []
+            for(let i=0;i<$PINNEDNEWS.length;i++){
+                let item = $PINNEDNEWS[i];
+                let id = Number(item.categoryId);
+                if( id === Filter.value || Filter.value === 0 ){
+                    PinnedNews.value.push(item);
+                }
             }
-            else{
-                store.commit('changeNewsHiddenNum',num);
-                return false;
+
+            TodayNews.value = []
+            for(let i=0;i<$TODAYNEWS.length;i++){
+                let item = $TODAYNEWS[i];
+                let id = Number(item.categoryId);
+                if( id === Filter.value || Filter.value === 0 ){
+                    TodayNews.value.push(item);
+                }
             }
-        }
+
+            //比较复杂的时间线重排
+            //console.log($NONNEWS)
+            NonNews.value = [];
+            let NonTimeBox = [];
+            for(let i=0;i<$NONNEWS.length;i++){
+                let item = $NONNEWS[i];
+                for(let j=0;j<item.member.length;j++){
+                    let item2 = item.member[j];
+                    let id = Number(item2.categoryId);
+                    if( id === Filter.value || Filter.value === 0 ){
+                        NonTimeBox.push(item2);
+                    }
+                }
+            }
+
+            let DateBox:Array<DateItem> = [];
+                interface DateItem{
+                    date:string,
+                    member:any
+                }
+
+                let DateCacheMap = new Map();
+                for(let i=0;i<NonTimeBox.length;i++){
+                    let item = NonTimeBox[i]
+                    if(DateCacheMap.has(item.releaseTime.slice(0,10))){
+                        DateBox[DateCacheMap.get(item.releaseTime.slice(0,10))].member.push(item);
+                    }
+                    else{
+                        let $PushItem:DateItem = {
+                            date:item.releaseTime.slice(0,10),
+                            member:[]
+                        }
+                        $PushItem.member.push(item)
+                        DateBox.push($PushItem);
+                        DateCacheMap.set(item.releaseTime.slice(0,10),DateCacheMap.size)
+                    }
+                }
+                NonNews.value = DateBox;
+
+
+
+        },{immediate:true,deep:true})
 
         
         onMounted(() => {
@@ -227,7 +283,6 @@ export default defineComponent({
                 await setPinnedNew();
                 await setNonTopNews();
             })().then(()=>{
-                console.log(NonNews.value)
 
                 //格式化当前时间
                 let nowTime =(new Date).getFullYear() + '-';
@@ -252,7 +307,6 @@ export default defineComponent({
                 })()
 
                 //提取今日新闻
-
                     let data = NonNews.value
                     for(let j=0;j<data.length;j++){
                         let item = data[j];
@@ -271,8 +325,8 @@ export default defineComponent({
                     date:string,
                     member:any
                 }
-                let DateCacheMap = new Map();
 
+                let DateCacheMap = new Map();
                 for(let i=0;i<NonTimeBox.value.length;i++){
                     let item = NonTimeBox.value[i]
                     if(DateCacheMap.has(item.releaseTime.slice(0,10))){
@@ -289,15 +343,26 @@ export default defineComponent({
                     }
                 }
 
-                console.log(DateBox)
-                console.log(DateCacheMap)
-
                 NonNews.value = [];
                 NonNews.value = DateBox;
+
+                //完成日期分类计算结果并储存,实际上中间量不应该是响应式，但是我现在懒得改
+
+                $PINNEDNEWS = PinnedNews.value;
+                $TODAYNEWS = TodayNews.value;
+                $NONNEWS = NonNews.value;
+
+                //
+
+
 
             })
             
         });
+
+        // onBeforeUpdate(()=>{
+        //     FilterFunc()
+        // })
 
         return{
             count,
@@ -316,7 +381,6 @@ export default defineComponent({
 
             turnToDisplay,
             Filter,
-            FilterFunc
         }
     }
 })

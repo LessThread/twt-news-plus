@@ -31,7 +31,6 @@ export default defineComponent({
         
         const Store = useStore()
         function changeFilter(index:number){
-            Store.commit('clearHiddenNum');
             Store.commit('changeArtFilter',index);
         }
         return {
