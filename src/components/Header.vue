@@ -114,6 +114,7 @@ export default defineComponent({
         margin-left: 2%;
         margin-top: 1%;
         width: @width;
+        bottom: -1vh;
         height: @width;
         max-width: 50%;
         max-height: 50%;

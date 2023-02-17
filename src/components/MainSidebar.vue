@@ -1,6 +1,6 @@
 <template>
     <div class="sidebar">
-        <div class="title-box" v-for="(item, index) in titles" :key="index" :class="{'hitButton' : isHit[index]}">
+        <div class="title-box" v-for="(item, index) in titles" :key="index" >
 
             <el-button type="primary" class="title"
             @click="changeFilter(index)"
@@ -71,7 +71,7 @@ export default defineComponent({
         background-color: #FAFAFA;
         width: 100%;
         height: 5vh;
-        margin-top: 1vh;
+        margin-top: .5vh;
         display: flex;
         :hover{
             font-weight: bold;
@@ -84,6 +84,7 @@ export default defineComponent({
             background-color: #F0F0F0;
         }
         .title{
+            margin-top:-3% ;
             border-radius: 0;
             width: 100%;
             height: 100%;
