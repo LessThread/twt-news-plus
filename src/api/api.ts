@@ -1,4 +1,5 @@
-const root = 'http://8.130.96.252/';
+//const root = 'http://8.130.96.252/';
+const root = 'https://news.twt.edu.cn/'; 
 const imgBed = 'imgbed/download/'
 const PinnedNew = 'art/select/summary/top/';
 const NonTopNews = 'art/select/summary/nor/';
