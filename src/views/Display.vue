@@ -36,8 +36,9 @@
                         <el-image :src="imgID" class="text-img"/>
                     </div>
 
-                    <div v-html="News" class="text-main">
-                    </div>
+                    <!-- <div v-html="News" class="text-main">
+                    </div> -->
+                    <v-md-preview :text="News" style="max-width: 110%;"></v-md-preview>
 
                 </div>
             </div>
@@ -51,6 +52,7 @@ import { defineComponent, ref ,onMounted } from "vue";
 import router from '@/router';
 import {getNews,displayImg} from '../api/api'
 import { indexOf } from 'lodash';
+import { vMdPreview }  from '@kangc/v-md-editor'
 
 
 export default defineComponent({

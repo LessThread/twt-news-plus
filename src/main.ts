@@ -8,7 +8,7 @@ import 'element-plus/dist/index.css'
 import * as Icons from '@element-plus/icons-vue'
 
 
-
+import plugins from '@/plugins'
 
 const app = createApp(App)
 
@@ -19,8 +19,7 @@ Object.keys(Icons).forEach(key => {
 
 app.use(store)
 app.use(router)
-
-
+app.use(plugins) 
 app.use(ElementPlus)
 
 app.mount('#app')
