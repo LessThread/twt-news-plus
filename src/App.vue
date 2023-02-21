@@ -11,7 +11,7 @@
       </div>
 
       <div class="recommend">
-        <Recommend msg="Welcome to Your Vue.js + TypeScript App"/>
+        <Recommend/>
       </div>
 </template>
 
@@ -20,15 +20,16 @@ import { Options, Vue } from 'vue-class-component';
 import Recommend from '@/components/Recommend.vue';
 import Header from '@/components/Header.vue';
 import MainView from '@/views/MainView.vue';
+import { useStore } from 'vuex';
+import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef,onBeforeUpdate} from 'vue'
+import {getAllNews} from '@/api/api';
 
-@Options({
+export default defineComponent({
   components: {
     Recommend,
     Header,
-    MainView
   },
 })
-export default class Home extends Vue {}
 </script>
 
 <style lang="less" scoped>

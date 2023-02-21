@@ -38,8 +38,9 @@
 
                     <!-- <div v-html="News" class="text-main">
                     </div> -->
-                    <v-md-preview :text="News" style="max-width: 110%;"></v-md-preview>
-
+                    <v-md-editor v-model="News" height="auto" mode="preview"></v-md-editor>
+                    <!-- <v-md-preview v-model="News" height="800px"></v-md-preview> -->
+                    
                 </div>
             </div>
         </div>
@@ -52,7 +53,6 @@ import { defineComponent, ref ,onMounted } from "vue";
 import router from '@/router';
 import {getNews,displayImg} from '../api/api'
 import { indexOf } from 'lodash';
-import { vMdPreview }  from '@kangc/v-md-editor'
 
 
 export default defineComponent({
@@ -66,6 +66,7 @@ export default defineComponent({
         const origin = ref("");
         const contributorName = ref('')
         const picName = ref('')
+
 
         async function displayNews(){
             let url = router.currentRoute.value.fullPath;
@@ -146,6 +147,7 @@ export default defineComponent({
         background-color: #f0f0f0;
         position: relative;
         z-index: -1;
+        height: auto;
         .text-img-box{
             width: 100%;
             overflow: hidden;
@@ -156,6 +158,9 @@ export default defineComponent({
         }
 
         .text-main{
+            
+        }
+        .text-view{
             
         }
     }

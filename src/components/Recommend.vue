@@ -1,39 +1,77 @@
 <template>
   <div class="recommend">
+
     <div class="head">
       <h1>推荐</h1>
       <hr style="border-color: black;"/>
     </div>
-    <div class="message-box" v-for="index in 5" :key="index">
-      <p>冯院叶底藏秋声 群英捧袂少年腾</p>
+
+    <div class="message-box" v-for="item in RecommendNews" :key="item.index" @click="turn2Display(item.id)">
+      <p>{{item.title}}</p>
       
       <div class="foot">
         <div>
-          近日新闻
+          {{ getCategoryNameById(item.categoryId) }}
         </div>
-        <div>
+        <!-- <div>
           社团
-        </div>
+        </div> -->
         <div>
-          2022.102
+          {{ item.releaseTime.slice(0,10) }}
         </div>
       </div>
       <hr style="border-color: black;"/>
     </div>
+    
   </div>
 </template>
 
 <script lang="ts">
-import { Options, Vue } from 'vue-class-component';
+import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from 'vue'
+import router from '@/router';
+import { useRouter } from 'vue-router';
+import {getAllNews,getCategoryNameById} from '@/api/api';
 
-@Options({
-  props: {
-    msg: String
+export default defineComponent({
+
+  setup(){
+    const RecommendNews = ref([] as any);
+    let news = [] as any;
+
+    async function SetRecommendNews(){
+      await getAllNews()
+      .then(res => {
+        news = res;
+        news.sort(function(a:any,b:any){
+          return b.viewsNumber - a.viewsNumber;
+        })
+      })
+
+      for(let i=0;i<5 && i<news.length; i++){
+        RecommendNews.value.push(news[i]);
+      }
+
+      console.log(RecommendNews.value)
+
+    }
+
+    function turn2Display(id:number){
+      router.push('/Display?='+id)
+    }
+
+    onMounted(()=>{
+      SetRecommendNews();
+    })
+
+    return{
+      RecommendNews,
+      getCategoryNameById,
+      turn2Display,
+    }
+
+
   }
 })
-export default class Header extends Vue {
-  msg!: string
-}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

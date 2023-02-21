@@ -1,9 +1,10 @@
 import { App } from 'vue'
 
-import VueMarkdownEditor from './mdEditor/index'
+import {VueMarkdownEditor,VMdPreview} from './mdEditor/index'
 
 const pluginList = [
-    VueMarkdownEditor
+    VueMarkdownEditor,
+    VMdPreview
 ]
 const plugins = {
     install (app: App<Element>) {
