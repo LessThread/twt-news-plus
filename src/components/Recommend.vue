@@ -2,12 +2,12 @@
   <div class="recommend">
 
     <div class="head">
-      <h1>推荐</h1>
+      <div>推荐</div>
       <hr style="border-color: black;"/>
     </div>
 
     <div class="message-box" v-for="item in RecommendNews" :key="item.index" @click="turn2Display(item.id)">
-      <p>{{item.title}}</p>
+      <p class="title">{{item.title}}</p>
       
       <div class="foot">
         <div>
@@ -47,7 +47,7 @@ export default defineComponent({
         })
       })
 
-      for(let i=0;i<5 && i<news.length; i++){
+      for(let i=0;i<3 && i<news.length; i++){
         RecommendNews.value.push(news[i]);
       }
 
@@ -81,6 +81,20 @@ export default defineComponent({
     position: relative;
     padding-left: 0.5vw;
     padding-right: 1vw;
+    padding-top: 0;
+
+    font-family: 'Noto Serif SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 48px;
+    line-height: 69px;
+  }
+  .title{
+    font-family: 'Noto Serif SC';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 46px;
   }
   .message-box{
     position: relative;
@@ -91,6 +105,11 @@ export default defineComponent({
     .foot{
       display: flex;
       justify-content: space-between;
+      font-family: 'Noto Sans SC';
+      font-style: normal;
+      font-weight: 400;
+      font-size: 20px;
+      line-height: 29px;
     }
   }
 

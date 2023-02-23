@@ -23,7 +23,7 @@ import { useStore } from 'vuex'
 export default defineComponent({
     setup() {
         //此处在将来留下接口以支持网络请求和编辑
-        const titles =  ref(['全部','竞赛','社团公告','通知','活动','新闻']);
+        const titles =  ref(['近日新闻','校园公告','社团风采','视点观察','院系风采','会议概要']);
         const img_src = ref([
                     require('../assets/calendar.svg'),
                     require('../assets/pen-tool.svg'),

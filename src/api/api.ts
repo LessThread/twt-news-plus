@@ -1,12 +1,13 @@
-const root = 'http://localhost:2048/'
-//const root = 'http://8.130.96.252/';
+//const root = 'http://localhost:2048/'
+const root = 'http://8.130.96.252/';
 //const root = 'https://news.twt.edu.cn/'; 
 const imgBed = 'imgbed/download/'
 const PinnedNew = 'art/select/summary/top/';
 const NonTopNews = 'art/select/summary/nor/';
 const News = 'art/select/'  ;
 const Img = 'imgbed/download/';
-const AllNews = 'art/select/summary/'
+const AllNews = 'art/select/summary/';
+const carousel = 'crs/select/';
 
 async function getPinnedNew(){
     const url = root + PinnedNew;
@@ -58,7 +59,7 @@ async function getAllNews() {
 
 //根据 categoryId 返回对应的项目名称（预留的接口）
 function getCategoryNameById(id:number):string{
-    const NameList = ['竞赛','社团公告','通知','活动','新闻']
+    const NameList = ['近日新闻','校园公告','社团风采','视点观察','院系风采','会议概要']
     if (id === 0){return "未分类"}
     console.log(NameList)
     switch(id){
@@ -66,8 +67,22 @@ function getCategoryNameById(id:number):string{
         case 2:return NameList[id-1];
         case 3:return NameList[id-1];
         case 4:return NameList[id-1];
+        case 5:return NameList[id-1];
+        default: return "UnKnow"
     }
     return "UnKnow"
+}
+
+async function getCarousel() {
+    const url = root + carousel;
+    const t = await fetch(url)
+        .then(res=>res.json())
+            .then(res => {return res.result})
+        return t;
+} 
+
+function getCarouselImg(id:any){
+    return root + carousel + id;
 }
 
 export{
@@ -80,4 +95,6 @@ export{
     displayImg,
     getAllNews,
     getCategoryNameById,
+    getCarousel,
+    getCarouselImg,
 }

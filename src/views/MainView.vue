@@ -9,13 +9,14 @@
                 height="400px"
                 id="carID"
                 >
-                    <div class="carouse-text">
-                        information
-                    </div>
+                    
 
-                    <el-carousel-item v-for="item in imgArr" :key="item" >
+                    <el-carousel-item v-for="item in CarouselImg" :key="item.id" >
                         <div class="run-box">
-                            <el-image :src="item" class="run" />
+                            <el-image :src="item.imageId" class="run" />
+                        </div>
+                        <div class="carouse-text">
+                            {{ item.title}}
                         </div>
                     </el-carousel-item>
                 </el-carousel>
@@ -50,7 +51,7 @@
                                                 </p>
                                             </div>
                                             <div class="foot">
-                                                <p class="writer">{{ item.contributorName }}</p>
+                                                <p class="writer">{{ item.contributorName.replaceAll('$',' ')}}</p>
                                                 <p class="time">{{item.releaseTime}}</p>
                                             </div>
                                         </div>   
@@ -81,7 +82,7 @@
                                             </div>
                                             
                                             <div class="foot">
-                                                <p class="writer">{{ item.contributorName }}</p>
+                                                <p class="writer">{{ item.contributorName.replaceAll('$',' ')}}</p>
                                                 <p class="time">{{item.releaseTime}}</p>
                                             </div>
                                         </div>   
@@ -90,13 +91,14 @@
                             </template>
                             
 
-                            <div class="list-time" v-if="NonNews.length">
+                            <!-- <div class="list-time" v-if="NonNews.length">
                                 Non
-                            </div>
+                            </div> -->
 
                             <div v-for="(item,index) in NonNews" :key="index" class="non-time-box">
+                                
+                                <div class="non-date">{{ item.date.replaceAll('-','.')}}</div>
                                 <hr/>
-                                <div>{{ item.date }}</div>
                                 <template v-for="item2 in item.member" :key="item2.id">
                                     <div class="list-item" @click="turnToDisplay(item2.id)">
                                         <div class="list-inf">
@@ -111,7 +113,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="foot">
-                                                    <p class="writer">{{ item2.contributorName }}</p>
+                                                    <p class="writer">{{ item2.contributorName.replaceAll('$',' ')}}</p>
                                                     <p class="time">{{item2.releaseTime}}</p>
                                                 </div>
                                             </div>   
@@ -139,7 +141,7 @@
 import { Options, Vue} from 'vue-class-component';
 import Sidebar from '../components/MainSidebar.vue';
 import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef,onBeforeUpdate} from 'vue'
-import {root,imgBed,getPinnedNew,getNonTopNews} from '../api/api'
+import {root,imgBed,getPinnedNew,getNonTopNews,getCarouselImg,getCarousel} from '../api/api'
 import { now } from 'lodash';
 import router from '@/router';
 import { useStore } from 'vuex'
@@ -277,8 +279,25 @@ export default defineComponent({
 
         },{immediate:true,deep:true})
 
+
+        const CarouselImg = ref([] as any)
+        async function setCarousel() {
+            let res = [] as any;
+            await getCarousel().then(res =>{
+                for(let i=0;i<res.length;i++){
+                    res[i].imageId = getCarouselImg(res[i].imageId);
+                    CarouselImg.value.push(res[i]);
+                    console.log(CarouselImg.value)
+                }
+            })
+        }
+
         
         onMounted(() => {
+
+            setCarousel();
+
+
             (async () => {
                 await setPinnedNew();
                 await setNonTopNews();
@@ -381,6 +400,7 @@ export default defineComponent({
 
             turnToDisplay,
             Filter,
+            CarouselImg
         }
     }
 })
@@ -439,42 +459,48 @@ export default defineComponent({
                 background-color:  #ffffff;
                 position: relative;
                 margin: 5vh auto;
-                min-height: 25vh;
+                height: 25vh;
                 width: 100%;
                 
                 .list-inf{
                     margin: 0 auto;
                     display: flex;
+                    height: 100%;
                     .list-img-box{
                         position: relative;
                         overflow: hidden;
                         width: 30%;
                         background-color:  #ffffff;
                     }
-                    .list-text-box{
-                        width: 70%;
-
-                        .title{
-                            margin-top: 0;
-                            margin-left: 1vw;
-                            font-size: 36px;
-                        }
-                        .tag{
-                            
-                            margin-left: 1vw;
-                            
-                            margin-bottom: 1vw;
-                        }
-                        .foot{
-                            margin-left: 1vw;
-                            width: 96%;
-                            display: flex;
-                            justify-content: space-between;
-                            /*position: absolute;*/
-                            bottom: 0;
-                            
-                        }
-                    }
+                    
+                }
+            }
+            .list-text-box{
+                display: flex;
+                justify-content: space-between;
+                flex-direction: column;
+                width: 70%;
+                height: 100%;
+                .title{
+                    margin-top: 0;
+                    margin-left: 1vw;
+                    font-size: 36px;
+                }
+                .tag{
+                    
+                    margin-left: 1vw;
+                    
+                    margin-bottom: 1vw;
+                }
+                .foot{
+                    font-size: 20px;
+                    margin-left: 1vw;
+                    width: 96%;
+                    display: flex;
+                    justify-content: space-between;
+                    /*position: absolute;*/
+                    bottom: 0;
+                    
                 }
             }
             .end-text{
@@ -484,6 +510,11 @@ export default defineComponent({
         }
        
     }
+
+    .non-date{
+        font-size: 48px;
+    }
+
 }
 
 </style>
