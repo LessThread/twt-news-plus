@@ -5,9 +5,9 @@
 
       <div class="MainView">
         <keep-alive>
-          <router-view v-if="$route.meta.keepAlive" />
+          <router-view v-if="$route.meta.keepAlive" :key="$route.path"/>
         </keep-alive>
-        <router-view v-if="!$route.meta.keepAlive"/>
+        <router-view v-if="!$route.meta.keepAlive" :key="$route.path"/>
       </div>
 
       <div class="recommend">

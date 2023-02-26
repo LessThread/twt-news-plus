@@ -70,8 +70,8 @@ export default defineComponent({
     .title-box{
         background-color: #FAFAFA;
         width: 100%;
-        height: 5vh;
-        margin-top: .5vh;
+        height: 6vh;
+        margin-top: 1vh;
         display: flex;
         :hover{
             font-weight: bold;
@@ -84,7 +84,6 @@ export default defineComponent({
             background-color: #F0F0F0;
         }
         .title{
-            margin-top:-3% ;
             border-radius: 0;
             width: 100%;
             height: 100%;
@@ -98,6 +97,13 @@ export default defineComponent({
                 width:100%;
                 margin-left: 1vw;
                 text-align: left;
+
+                font-family: 'Noto Sans SC';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 18px;
+                line-height: 29px;
+                color: #767676;
             }
             .title-img{
                 margin-left: 2vw;

@@ -51,7 +51,7 @@
                                                 </p>
                                             </div>
                                             <div class="foot">
-                                                <p class="writer">{{ item.contributorName.replaceAll('$',' ')}}</p>
+                                                <p class="writer">{{item?item.contributorName.replaceAll('$',' '):'Loading'}}</p>
                                                 <p class="time">{{item.releaseTime}}</p>
                                             </div>
                                         </div>   
@@ -82,7 +82,7 @@
                                             </div>
                                             
                                             <div class="foot">
-                                                <p class="writer">{{ item.contributorName.replaceAll('$',' ')}}</p>
+                                                <p class="writer">{{ item?item.contributorName.replaceAll('$',' '):'Loading'}}</p>
                                                 <p class="time">{{item.releaseTime}}</p>
                                             </div>
                                         </div>   
@@ -97,7 +97,7 @@
 
                             <div v-for="(item,index) in NonNews" :key="index" class="non-time-box">
                                 
-                                <div class="non-date">{{ item.date.replaceAll('-','.')}}</div>
+                                <div class="non-date">{{ item?item.date.replaceAll('-','.'):''}}</div>
                                 <hr/>
                                 <template v-for="item2 in item.member" :key="item2.id">
                                     <div class="list-item" @click="turnToDisplay(item2.id)">
@@ -113,7 +113,7 @@
                                                     </p>
                                                 </div>
                                                 <div class="foot">
-                                                    <p class="writer">{{ item2.contributorName.replaceAll('$',' ')}}</p>
+                                                    <p class="writer">{{ item2?item2.contributorName.replaceAll('$',' '):'Loading'}}</p>
                                                     <p class="time">{{item2.releaseTime}}</p>
                                                 </div>
                                             </div>   
@@ -371,9 +371,6 @@ export default defineComponent({
                 $TODAYNEWS = TodayNews.value;
                 $NONNEWS = NonNews.value;
 
-                //
-
-
 
             })
             
@@ -482,9 +479,14 @@ export default defineComponent({
                 width: 70%;
                 height: 100%;
                 .title{
+                    font-family: 'Noto Serif SC';
+                    font-style: normal;
+                    font-weight: 550;
+                    font-size: 36px;
+                    line-height: 52px;
+
                     margin-top: 0;
                     margin-left: 1vw;
-                    font-size: 36px;
                 }
                 .tag{
                     
