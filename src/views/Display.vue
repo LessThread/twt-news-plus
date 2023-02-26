@@ -55,6 +55,7 @@ import {getNews,displayImg} from '../api/api'
 import { indexOf } from 'lodash';
 
 
+
 export default defineComponent({
     setup() {
         const News = ref('Loading')
@@ -116,9 +117,14 @@ export default defineComponent({
     margin-left: 5vw;
 
     .title{
+        font-family: 'Noto Serif SC';
+        font-style: normal;
+        font-weight: 500;
         font-size: 64px;
-        margin-left: 1vw;
+        line-height: 92px;
+        color: #000000;
 
+        margin-left: 1vw;
     }
 }
 
@@ -173,17 +179,35 @@ export default defineComponent({
             
             text-align: center;
             .data-common{
-                font-size: 32px;
+                font-size: 30px;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight:100;
+                font-size: 36px;
+                line-height: 44px;
+                text-align: center;
             }
             .data-large{
                 font-size: 48px;
-                font-weight:500;
+                font-family: 'Product Sans';
+                font-style: normal;
+                font-weight: 400;
+                line-height: 44px;
+                text-align: center;
             }
         }
         .infomation {
             margin-top: 5vh;
             width: 80%;
             text-align: center;
+
+            font-family: 'Noto Serif SC';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            line-height: 23px;
+            color: #2A2A2A;
+
             .information-text {
                 font-size: 14px;
             }

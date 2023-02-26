@@ -1,6 +1,6 @@
 //const root = 'http://localhost:2048/'
-const root = 'http://8.130.96.252/';
-//const root = 'https://news.twt.edu.cn/'; 
+//const root = 'http://8.130.96.252/';
+const root = 'https://news.twt.edu.cn/'; 
 const imgBed = 'imgbed/download/'
 const PinnedNew = 'art/select/summary/top/';
 const NonTopNews = 'art/select/summary/nor/';
@@ -82,7 +82,9 @@ async function getCarousel() {
 } 
 
 function getCarouselImg(id:any){
-    return root + carousel + id;
+    return root 
+    +'imgbed/download/'//carousel 
+    + id;
 }
 
 export{

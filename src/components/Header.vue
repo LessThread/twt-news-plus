@@ -7,7 +7,9 @@
             <img src="../assets/icon.svg" class="icon"/>
             <img src="../assets/TWTNews.svg" class="title" />
         </div>
-        <div class="search-box">
+
+
+        <div class="search-box" v-if="!input_box">
             <div class="search">
                 <el-input  class="search-input"
                     v-model="input"
@@ -23,6 +25,28 @@
             </div>
         </div>
 
+        <div class="search-box" v-if="input_box">
+            <div class="added-button-box">
+                <div v-for="(item,index) in TitleList" :key="index" class="added-button">
+                    <el-link :underline="false">{{item}}</el-link>
+                </div>
+            </div>
+            <div class="search-mini">
+                <el-input  class="search-input"
+                    v-model="input"
+                    placeholder="No input"
+                    clearable
+                >
+                    <template #prefix>
+                        <el-icon class="el-icon--left">
+                        <Search />
+                        </el-icon>
+                    </template>          
+                </el-input>
+            </div>
+        </div>
+
+
         <div class="link">
             <el-link :underline="false">关于我们</el-link>
             <el-link :underline="false">投稿</el-link>
@@ -36,6 +60,7 @@
 import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef} from 'vue'
 import router from '@/router';
 import { useRouter } from 'vue-router';
+import {getCategoryNameById} from '@/api/api'
 
 export default defineComponent({
     name:'Header',
@@ -45,22 +70,39 @@ export default defineComponent({
         function turn2Home(){
             router.push('/');
         }
-
+        const input_box = ref(0)
+        const TitleList = ref([] as any);
+        function getList(){
+            for(let i=1;i<4;i++){
+                TitleList.value.push(getCategoryNameById(i));
+                console.log(getCategoryNameById(i))
+            }
+        }
+        
+        //路由判断
         watch(()=>router.currentRoute.value.fullPath,()=>{
             let url:string = router.currentRoute.value.fullPath;
             console.log(url.indexOf('Display'))
             if(url.indexOf('Display') !== -1){
                 color.value = 1;
+                input_box.value = 1;
             }
             else{
                 color.value = 0;
+                input_box.value = 0;
             }
-
         })
+
+        onMounted(()=>{
+            getList();
+        })
+
         return{
             turn2Home,
             input,
-            color
+            color,
+            input_box,
+            TitleList
         }
     
     }
@@ -97,6 +139,30 @@ export default defineComponent({
             width: 100%;
             height: 100%;
             overflow: hidden;
+        }
+
+        .search-mini{
+            position: absolute;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+        }
+        .added-button-box{
+            display: flex;
+            position: absolute;
+            width: 40%;
+            background-color: #fafafa;
+            justify-content: space-between;
+        }
+        .added-button{
+            font-family: 'Noto Sans SC';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 20px;
+            line-height: 29px;
+            letter-spacing: -0.003em;
+            color: #2A2A2A;
         }
     }
 

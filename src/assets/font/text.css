@@ -4,3 +4,10 @@
     font-weight: normal;
     font-style: normal;
 }
+
+@font-face {
+    font-family: "Product Sans";
+    src: url('./Product-Sans-Bold-3.ttf');
+    font-weight: normal;
+    font-style: normal;
+}

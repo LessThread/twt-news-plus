@@ -9,15 +9,25 @@
                 height="400px"
                 id="carID"
                 >
-                    
+                    <template>
 
+                    </template>
                     <el-carousel-item v-for="item in CarouselImg" :key="item.id" >
-                        <div class="run-box">
-                            <el-image :src="item.imageId" class="run" />
-                        </div>
+                        
                         <div class="carouse-text">
-                            {{ item.title}}
+                            <div class="carouse-title">
+                                {{ item.title}}
+                            </div>
+                            
+                            <div class="carouse-summary">
+                                {{ item.summary }}
+                            </div>
+                            
                         </div>
+                        <div class="run-box">
+                            <el-image :src="getCarouselImg(item.imageId)" class="run" />
+                        </div>
+                        
                     </el-carousel-item>
                 </el-carousel>
             </div>
@@ -63,7 +73,18 @@
                             
     
                             <div class="list-time" v-if="TodayNews.length" >
-                                Today
+                                <p style="display:inline">今日</p>
+                                <p style="
+                                font-family: 'Noto Serif SC';
+                                font-style: normal;
+                                font-weight: 600;
+                                font-size: 24px;
+                                line-height: 34px;
+                                letter-spacing: -0.003em;
+                                color: #000000;
+                                opacity: 0.7;
+                                display:inline;
+                                ">{{nowTimes}}</p>
                             </div>
 
                             <template v-for="(item) in TodayNews" :key="item.id">
@@ -141,7 +162,7 @@
 import { Options, Vue} from 'vue-class-component';
 import Sidebar from '../components/MainSidebar.vue';
 import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef,onBeforeUpdate} from 'vue'
-import {root,imgBed,getPinnedNew,getNonTopNews,getCarouselImg,getCarousel} from '../api/api'
+import {root,imgBed,getPinnedNew,getNonTopNews,getCarouselImg,getCarousel,} from '../api/api'
 import { now } from 'lodash';
 import router from '@/router';
 import { useStore } from 'vuex'
@@ -170,7 +191,7 @@ export default defineComponent({
 
         const Filter = computed(() => store.state.ArtFilter)
         const filter = ref(Filter.value)
-        
+        const nowTimes = ref('');
 
 
         let $PINNEDNEWS:any;
@@ -282,10 +303,10 @@ export default defineComponent({
 
         const CarouselImg = ref([] as any)
         async function setCarousel() {
-            let res = [] as any;
             await getCarousel().then(res =>{
                 for(let i=0;i<res.length;i++){
-                    res[i].imageId = getCarouselImg(res[i].imageId);
+                    if(res[i].imageId == 0)continue;
+                    res[i].imageURL = getCarouselImg(res[i].imageId);
                     CarouselImg.value.push(res[i]);
                     console.log(CarouselImg.value)
                 }
@@ -324,6 +345,8 @@ export default defineComponent({
                         return m
                     }
                 })()
+                
+                nowTimes.value = nowTime;
 
                 //提取今日新闻
                     let data = NonNews.value
@@ -397,7 +420,9 @@ export default defineComponent({
 
             turnToDisplay,
             Filter,
-            CarouselImg
+            CarouselImg,
+            getCarouselImg,
+            nowTimes,
         }
     }
 })
@@ -429,6 +454,35 @@ export default defineComponent({
             height: 100%;
             left:100%-@cwidth;
             }
+        .carouse-title{
+            width: 90%;
+            left: 5%;
+            margin-top: 8%;
+            position:relative;
+            font-family: 'Noto Serif SC';
+            font-style: normal;
+            font-weight: 700;
+            font-size: 40px;
+            line-height: 57px;
+
+            color: #FFFFFF;
+        }
+        .carouse-summary{
+            width: 90%;
+            left: 5%;
+            margin-top: 5%;
+            position:relative;
+            font-family: 'Noto Sans SC';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 16px;
+            line-height: 23px;
+            letter-spacing: -0.003em;
+
+            color: #FFFFFF;
+
+            opacity: 0.8;
+        }
         
         .run-box{
             border-radius: @border-r;
@@ -448,8 +502,15 @@ export default defineComponent({
             width: 95%;
 
             .list-time{
-                margin-bottom: 0;
                 font-size: 40px;
+
+                font-family: 'Noto Serif SC';
+                font-style: normal;
+                font-weight: 600;
+                font-size: 48px;
+                line-height: 69px;
+                letter-spacing: -0.003em;
+                color: #000000;
             }
 
             .list-item{
@@ -493,6 +554,14 @@ export default defineComponent({
                     margin-left: 1vw;
                     
                     margin-bottom: 1vw;
+                    font-family: 'Noto Sans SC';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 20px;
+                    line-height: 29px;
+                    /* identical to box height */
+                    color: #000000;
+                    opacity: 0.6;
                 }
                 .foot{
                     font-size: 20px;
@@ -502,6 +571,16 @@ export default defineComponent({
                     justify-content: space-between;
                     /*position: absolute;*/
                     bottom: 0;
+
+
+                    font-family: 'Noto Sans SC';
+                    font-style: normal;
+                    font-weight: 400;
+                    font-size: 20px;
+                    line-height: 29px;
+                    /* identical to box height */
+                    color: #000000;
+                    opacity: 0.6;
                     
                 }
             }
@@ -514,8 +593,14 @@ export default defineComponent({
     }
 
     .non-date{
+        font-family: 'Noto Serif SC';
+        font-style: normal;
+        font-weight: 600;
         font-size: 48px;
-    }
+        line-height: 69px;
+        letter-spacing: -0.003em;
+        color: #000000;
+            }
 
 }
 
@@ -526,7 +611,7 @@ export default defineComponent({
 #carID{
     .el-carousel__indicators{
         position: absolute;
-        background-color: #FFA156;
+        background-color: #ffa25600;
         width: @i-width;
         left:100%-@i-width;
         button{
