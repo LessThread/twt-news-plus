@@ -53,26 +53,43 @@
             <el-button type="primary" class="log-button" @click="dialogFormVisible = 1">登录/注册</el-button>
 
             <div class="login-board" >
-                <el-dialog v-model="dialogFormVisible" title="Shipping address">
-                    <el-form :model="form">
-                        <el-form-item label="Promotion name" :label-width="formLabelWidth">
+                <el-dialog 
+                    v-model="dialogFormVisible" 
+                    width="30%"
+                    top="15%"
+                    lock-scroll="true"
+                    close-on-click-modal=false
+                >
+                <template #header="titleId">
+                    <div style="height:auto;width:100%" >
+                        <p :id="titleId"  style="font-family:'Noto Sans SC';font-style: normal;font-weight: 400;font-size: 36px;line-height: 52px;text-align: center;">
+                            登录天外天
+                        </p>
+                    </div>
+                </template>
+                    <el-form :model="form" 
+                    label-position="left"
+                    label-width="100px"
+                    >
+                        <el-form-item label="用户名" >
                             <el-input v-model="form.name" autocomplete="off" />
                         </el-form-item>
-                        <el-form-item label="Zones" :label-width="formLabelWidth">
-                            <el-select v-model="form.region" placeholder="Please select a zone">
-                            <el-option label="Zone No.1" value="shanghai" />
-                            <el-option label="Zone No.2" value="beijing" />
-                            </el-select>
+                        <el-link href="https://www.twt.edu.cn/home/" target="_blank" style="float:right">没有账号？</el-link><br/><br/>
+                        <el-form-item label="密码">
+                            <el-input v-model="form.password" autocomplete="off" type="password" show-password/>
                         </el-form-item>
-                        </el-form>
+                        <el-link href="https://www.twt.edu.cn/home/" target="_blank" style="float:right">忘记密码？</el-link><br/><br/>
+                    </el-form>
 
                         <template #footer>
-                        <span class="dialog-footer">
-                            <el-button @click="dialogFormVisible = false">Cancel</el-button>
-                            <el-button type="primary" @click="dialogFormVisible = false">
-                            Confirm
-                            </el-button>
-                        </span>
+                        <div style="text-align: center;">
+                            <span class="dialog-footer">
+                                <el-button type="primary" @click="dialogFormVisible = 0">
+                                确认
+                                </el-button>
+                            </span>
+                        </div>
+                        
                         </template>
 
                     </el-dialog>
@@ -109,13 +126,7 @@ export default defineComponent({
         //登录部分
         const form = reactive({
             name: '',
-            region: '',
-            date1: '',
-            date2: '',
-            delivery: false,
-            type: [],
-            resource: '',
-            desc: '',
+            password:""
             })
 
         //登录函数
@@ -262,4 +273,31 @@ export default defineComponent({
 .icon-background-hit{
     background-color: #ffffff !important
 }
+
+.el-dialog{
+    --el-dialog-bg-color:rgba(74, 72, 72, 0) !important;
+}
+
+.el-dialog__header{
+    height: 70px;
+    margin-right:0;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+    background-color: #ffffff !important;
+    
+}
+.el-dialog__body{
+    background-color: #ffffff !important;
+}
+.el-dialog__footer{
+    border-bottom-left-radius:  10px;
+    border-bottom-right-radius: 10px;
+    background-color: #ffffff ;
+}
+/*.el-dialog__headerbtn{
+    width: 10px;
+    height: 10px;
+    border-style: dashed;
+}*/
+
 </style>
