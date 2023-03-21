@@ -73,7 +73,7 @@ export default defineComponent({
         height: 6vh;
         margin-top: 1vh;
         display: flex;
-        :hover{
+        &:hover{
             font-weight: bold;
             color: black;
         }
@@ -104,6 +104,11 @@ export default defineComponent({
                 font-size: 18px;
                 line-height: 29px;
                 color: #767676;
+
+                &:hover{
+                    font-weight: bold;
+                    color: black;
+                }
             }
             .title-img{
                 margin-left: 2vw;

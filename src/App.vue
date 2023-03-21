@@ -4,10 +4,7 @@
       </div>
 
       <div class="MainView">
-        <keep-alive>
-          <router-view v-if="$route.meta.keepAlive" :key="$route.path"/>
-        </keep-alive>
-        <router-view v-if="!$route.meta.keepAlive" :key="$route.path"/>
+          <router-view/>
       </div>
 
       <div class="recommend">
@@ -37,7 +34,7 @@ export default defineComponent({
 .recommend{
   position: fixed;
   background-color: #ffffff;
-  z-index: 9;
+  z-index: 4;
   top: 10vh;
   right: 0vw;
   height: 90vh;

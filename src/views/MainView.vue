@@ -14,7 +14,7 @@
                     </template>
                     <el-carousel-item v-for="item in CarouselImg" :key="item.id" >
                         
-                        <div class="carouse-text">
+                        <div class="carouse-text" @click="turnToDisplay(item.articleId)">
                             <div class="carouse-title">
                                 {{ item.title}}
                             </div>
@@ -459,18 +459,23 @@ export default defineComponent({
             left: 5%;
             margin-top: 8%;
             position:relative;
+
             font-family: 'Noto Serif SC';
             font-style: normal;
             font-weight: 700;
             font-size: 40px;
             line-height: 57px;
-
             color: #FFFFFF;
+
+            &:hover{
+                text-decoration: underline;
+            }
         }
         .carouse-summary{
             width: 90%;
             left: 5%;
             margin-top: 5%;
+
             position:relative;
             font-family: 'Noto Sans SC';
             font-style: normal;
@@ -478,10 +483,12 @@ export default defineComponent({
             font-size: 16px;
             line-height: 23px;
             letter-spacing: -0.003em;
-
             color: #FFFFFF;
-
             opacity: 0.8;
+
+            &:hover{
+                text-decoration: underline;
+            }
         }
         
         .run-box{
@@ -548,6 +555,9 @@ export default defineComponent({
 
                     margin-top: 0;
                     margin-left: 1vw;
+                    &:hover{
+                        text-decoration: underline;
+                    }
                 }
                 .tag{
                     

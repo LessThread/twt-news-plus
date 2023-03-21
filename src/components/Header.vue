@@ -28,7 +28,7 @@
         <div class="search-box" v-if="input_box">
             <div class="added-button-box">
                 <div v-for="(item,index) in TitleList" :key="index" class="added-button">
-                    <el-link :underline="false">{{item}}</el-link>
+                    <el-link :underline="false" @click="turn2Home">{{item}}</el-link>
                 </div>
             </div>
             <div class="search-mini">
@@ -50,7 +50,33 @@
         <div class="link">
             <el-link :underline="false">关于我们</el-link>
             <el-link :underline="false">投稿</el-link>
-            <el-button type="primary">登录注册</el-button>
+            <el-button type="primary" class="log-button" @click="dialogFormVisible = 1">登录/注册</el-button>
+
+            <div class="login-board" >
+                <el-dialog v-model="dialogFormVisible" title="Shipping address">
+                    <el-form :model="form">
+                        <el-form-item label="Promotion name" :label-width="formLabelWidth">
+                            <el-input v-model="form.name" autocomplete="off" />
+                        </el-form-item>
+                        <el-form-item label="Zones" :label-width="formLabelWidth">
+                            <el-select v-model="form.region" placeholder="Please select a zone">
+                            <el-option label="Zone No.1" value="shanghai" />
+                            <el-option label="Zone No.2" value="beijing" />
+                            </el-select>
+                        </el-form-item>
+                        </el-form>
+
+                        <template #footer>
+                        <span class="dialog-footer">
+                            <el-button @click="dialogFormVisible = false">Cancel</el-button>
+                            <el-button type="primary" @click="dialogFormVisible = false">
+                            Confirm
+                            </el-button>
+                        </span>
+                        </template>
+
+                    </el-dialog>
+            </div>
         </div>
         
     </div>
@@ -67,6 +93,7 @@ export default defineComponent({
     setup(){
         let input = ref()
         let color = ref(0);
+        let dialogFormVisible = ref(0)
         function turn2Home(){
             router.push('/');
         }
@@ -78,6 +105,22 @@ export default defineComponent({
                 console.log(getCategoryNameById(i))
             }
         }
+
+        //登录部分
+        const form = reactive({
+            name: '',
+            region: '',
+            date1: '',
+            date2: '',
+            delivery: false,
+            type: [],
+            resource: '',
+            desc: '',
+            })
+
+        //登录函数
+        // function login(){
+        // };
         
         //路由判断
         watch(()=>router.currentRoute.value.fullPath,()=>{
@@ -102,7 +145,9 @@ export default defineComponent({
             input,
             color,
             input_box,
-            TitleList
+            TitleList,
+            dialogFormVisible,
+            form,
         }
     
     }
@@ -110,6 +155,11 @@ export default defineComponent({
 })
 </script>
 
+<style lang="less">
+.el-input__wrapper{
+    background-color: #f0f0f0;
+}
+</style>
 
 <style lang="less" scoped>
 
@@ -128,7 +178,6 @@ export default defineComponent({
     .search-box{
         display: flex;
         position: absolute;
-        background-color: #fafafa;
         top: 3vh;
         left: @left-dis+2vw;
         width: @search-box-width;
@@ -152,14 +201,13 @@ export default defineComponent({
             display: flex;
             position: absolute;
             width: 40%;
-            background-color: #fafafa;
             justify-content: space-between;
         }
         .added-button{
             font-family: 'Noto Sans SC';
             font-style: normal;
-            font-weight: 400;
-            font-size: 20px;
+            font-weight: 500;
+            font-size: 28px;
             line-height: 29px;
             letter-spacing: -0.003em;
             color: #2A2A2A;

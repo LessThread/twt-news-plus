@@ -95,6 +95,9 @@ export default defineComponent({
     font-weight: 500;
     font-size: 32px;
     line-height: 46px;
+    &:hover{
+      text-decoration: underline;
+    }
   }
   .message-box{
     position: relative;
@@ -111,6 +114,7 @@ export default defineComponent({
       font-size: 20px;
       line-height: 29px;
     }
+    
   }
 
 }
