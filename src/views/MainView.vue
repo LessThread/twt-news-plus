@@ -581,6 +581,7 @@ export default defineComponent({
                     justify-content: space-between;
                     /*position: absolute;*/
                     bottom: 0;
+                    overflow: hidden;
 
 
                     font-family: 'Noto Sans SC';

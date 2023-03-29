@@ -85,9 +85,9 @@ export default defineComponent({
 
     font-family: 'Noto Serif SC';
     font-style: normal;
-    font-weight: 600;
-    font-size: 48px;
-    line-height: 69px;
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 46px;
   }
   .title{
     font-family: 'Noto Serif SC';

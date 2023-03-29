@@ -93,6 +93,7 @@ export default defineComponent({
             border-style: none;
             background-color: #FAFAFA;
             color:#2a2a2a;
+            overflow: hidden;
             .title-text{
                 width:100%;
                 margin-left: 1vw;

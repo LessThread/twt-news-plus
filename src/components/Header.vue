@@ -117,7 +117,7 @@ export default defineComponent({
         const input_box = ref(0)
         const TitleList = ref([] as any);
         function getList(){
-            for(let i=1;i<4;i++){
+            for(let i=1;i < 4;i++){
                 TitleList.value.push(getCategoryNameById(i));
                 console.log(getCategoryNameById(i))
             }
@@ -280,7 +280,7 @@ export default defineComponent({
 
 .el-dialog__header{
     height: 70px;
-    margin-right:0;
+    margin-right:0 !important;
     border-top-right-radius: 10px;
     border-top-left-radius: 10px;
     background-color: #ffffff !important;

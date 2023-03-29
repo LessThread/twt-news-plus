@@ -22,7 +22,10 @@
                     <p class="information-text">来源/ {{origin}}</p>
                 </div>
                 <div class="QR">
-
+                    <img :src="qr[0]" class="QR-img"/>
+                    <div class="QR-text">
+                        - 微信扫码 -<br />获取更多资讯
+                    </div>
                 </div>
             </div>
 
@@ -66,7 +69,8 @@ export default defineComponent({
         const hours = ref("");
         const origin = ref("");
         const contributorName = ref('')
-        const picName = ref('')
+        const picName = ref('');
+        const qr = ref([require('../assets/QR/qr.png')])
 
 
         async function displayNews(){
@@ -103,7 +107,8 @@ export default defineComponent({
             hours,
             origin,
             contributorName,
-            picName
+            picName,
+            qr,
         };
     },
 })
@@ -196,26 +201,52 @@ export default defineComponent({
                 text-align: center;
             }
         }
-        .infomation {
-            margin-top: 5vh;
-            width: 80%;
-            text-align: center;
-
-            font-family: 'Noto Serif SC';
-            font-style: normal;
-            font-weight: 600;
-            font-size: 16px;
-            line-height: 23px;
-            color: #2A2A2A;
-
-            .information-text {
-                font-size: 14px;
-            }
-            
-        }
+        
         
     }
 }
+
+.infomation {
+    margin-top: 5vh;
+    width: 80%;
+    text-align: center;
+
+    font-family: 'Noto Serif SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 23px;
+    color: #2A2A2A;
+
+    .information-text {
+        font-family: 'Noto Serif SC';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 23px;
+        color: #2A2A2A;
+    }
+
+    
+    
+}
+
+.QR{
+    .QR-img{
+        width: 80%;
+    }
+    .QR-text{
+        width: 80%;
+        text-align: center;
+        font-family: 'Noto Serif SC';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 20px;
+        text-align: center;
+    }   
+}
+
 </style>
 
 <style>
