@@ -10,6 +10,10 @@ const routes: Array<RouteRecordRaw> = [
     redirect: "/MainView"
   },
   {
+    path: '/news',
+    redirect: "/MainView"
+  },
+  {
     path: '/MainView',
     name: 'MainView',
     component: () => import('../views/MainView.vue'),

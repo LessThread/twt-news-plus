@@ -56,7 +56,7 @@ export default defineComponent({
     }
 
     function turn2Display(id:number){
-      router.push('/Display?='+id)
+      router.push('/Display?='+id);
     }
 
     onMounted(()=>{

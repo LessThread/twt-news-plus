@@ -392,7 +392,7 @@ export default defineComponent({
 
                 $PINNEDNEWS = PinnedNews.value;
                 $TODAYNEWS = TodayNews.value;
-                $NONNEWS = NonNews.value;
+                $NONNEWS = NonNews.value.reverse();
 
 
             })

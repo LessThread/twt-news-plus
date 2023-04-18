@@ -52,11 +52,11 @@
 
 <script lang="ts">
 import { Options, Vue} from 'vue-class-component';
-import { defineComponent, ref ,onMounted } from "vue";
+import { defineComponent, ref ,onMounted ,watch,getCurrentInstance} from "vue";
+import { onBeforeRouteUpdate } from "vue-router";
 import router from '@/router';
 import {getNews,displayImg} from '../api/api'
 import { indexOf } from 'lodash';
-
 
 
 export default defineComponent({
@@ -93,6 +93,10 @@ export default defineComponent({
                 })
 
             }
+        
+            watch(() => router.currentRoute.value.fullPath,(newPath, oldPath) => {
+                displayNews()
+            },{ immediate: true });
 
         onMounted(() => {
             displayNews()
