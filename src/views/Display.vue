@@ -41,7 +41,13 @@
 
                     <!-- <div v-html="News" class="text-main">
                     </div> -->
-                    <v-md-editor v-model="News" height="auto" mode="preview"></v-md-editor>
+                    
+                    <div v-if="mdORhtml">
+                        <v-md-editor v-model="News" height="auto" mode="preview"></v-md-editor>
+                    </div>
+                    <div v-if="!mdORhtml">
+                        <p v-html = "News"></p>
+                    </div>
                     <!-- <v-md-preview v-model="News" height="800px"></v-md-preview> -->
                     
                 </div>
@@ -71,6 +77,14 @@ export default defineComponent({
         const contributorName = ref('')
         const picName = ref('');
         const qr = ref([require('../assets/QR/qr.png')])
+        const mdORhtml = ref();
+
+        function setMdORhtml(){
+            let mark = News.value.charAt(News.value.length - 1);
+            if(mark === '&')mdORhtml.value = 0;
+            else mdORhtml.value = 1;
+
+        }
 
 
         async function displayNews(){
@@ -98,6 +112,9 @@ export default defineComponent({
                 displayNews()
             },{ immediate: true });
 
+            watch(()=>News.value,(newPath, oldPath) => {
+                setMdORhtml();
+            },{ immediate: true });
         onMounted(() => {
             displayNews()
         }); 
@@ -113,6 +130,7 @@ export default defineComponent({
             contributorName,
             picName,
             qr,
+            mdORhtml,
         };
     },
 })
