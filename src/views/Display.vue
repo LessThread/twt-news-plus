@@ -81,7 +81,7 @@ export default defineComponent({
 
         function setMdORhtml(){
             let mark = News.value.charAt(News.value.length - 1);
-            if(mark === '&')mdORhtml.value = 0;
+            if(mark === '@'){mdORhtml.value = 0;News.value = News.value.slice(0,-1)}
             else mdORhtml.value = 1;
 
         }

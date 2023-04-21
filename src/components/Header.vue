@@ -13,7 +13,7 @@
             <div class="search">
                 <el-input  class="search-input"
                     v-model="input"
-                    placeholder="Please input"
+                    placeholder="青春一路 有歌有光亮"
                     clearable
                 >
                     <template #prefix>
@@ -56,36 +56,58 @@
                 <el-dialog 
                     v-model="dialogFormVisible" 
                     width="30%"
-                    top="15%"
+                    top="10%"
                     lock-scroll="true"
                     close-on-click-modal=false
                 >
                 <template #header="titleId">
                     <div style="height:auto;width:100%" >
-                        <p :id="titleId"  style="font-family:'Noto Sans SC';font-style: normal;font-weight: 400;font-size: 36px;line-height: 52px;text-align: center;">
+                        <p :id="titleId"  style="
+                        ont-family:'Noto Sans SC';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 36px;
+                        line-height: 52px;
+                        text-align: center;"
+                        >
                             登录天外天
                         </p>
                     </div>
                 </template>
                     <el-form :model="form" 
-                    label-position="left"
-                    label-width="100px"
+                    
                     >
-                        <el-form-item label="用户名" >
-                            <el-input v-model="form.name" autocomplete="off" />
+                        <el-form-item  >
+                            <el-input v-model="form.name" autocomplete="off" class="user-input" placeholder=" 天外天账号/手机号/学号"/>
                         </el-form-item>
-                        <el-link href="https://www.twt.edu.cn/home/" target="_blank" style="float:right">没有账号？</el-link><br/><br/>
-                        <el-form-item label="密码">
-                            <el-input v-model="form.password" autocomplete="off" type="password" show-password/>
+                        <el-link href="https://www.twt.edu.cn/home/" target="_blank" style="float:right;color:#00A0E9;">没有账号？</el-link><br/><br/>
+                        <el-form-item >
+                            <el-input v-model="form.password" autocomplete="off" type="password" show-password placeholder=" 密码" class="user-input"/>
                         </el-form-item>
-                        <el-link href="https://www.twt.edu.cn/home/" target="_blank" style="float:right">忘记密码？</el-link><br/><br/>
+                        <el-link href="https://www.twt.edu.cn/home/" target="_blank" style="float:right;color:#00A0E9;">忘记密码？</el-link><br/><br/>
                     </el-form>
 
                         <template #footer>
                         <div style="text-align: center;">
                             <span class="dialog-footer">
-                                <el-button type="primary" @click="dialogFormVisible = 0">
-                                确认
+                                <el-button type="primary" @click="dialogFormVisible = 0" style="
+                                width: 101px;
+                                height: 50px;
+                                left: 669px;
+                                top: 559px;
+                                ">
+
+                                <p style="
+                                font-family: 'Noto Sans SC';
+                                font-style: normal;
+                                font-weight: 400;
+                                font-size: 20px;
+                                line-height: 29px;
+                                text-align: center;
+                                letter-spacing: 0.122em;
+                                color: #FFFFFF;">
+                                    确认
+                                </p>
                                 </el-button>
                             </span>
                         </div>
@@ -266,6 +288,41 @@ export default defineComponent({
         top: 3vh;
     }
 }
+
+/deep/ .user-input{
+    .el-input__wrapper{
+        box-shadow: 0 0 0; 
+        border: none;
+    }
+
+}
+
+/deep/ .user-input input{
+
+    width:90%;
+    height: 50px;
+    left: 494px;
+    top: 378px;
+    
+    background: #FAFAFA;
+    border: 1px solid #F0F0F0;
+    border-radius: 16px;
+
+}
+
+/deep/
+.search-input{
+    .el-input__wrapper{
+        box-shadow: 0 0 0; 
+        border: none;
+        background: #F0F0F0;
+    }
+    input{
+        border-radius: 8px;
+    }
+
+}
+
 
 </style>
 

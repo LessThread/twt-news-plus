@@ -75,15 +75,15 @@
                             <div class="list-time" v-if="TodayNews.length" >
                                 <p style="display:inline">今日</p>
                                 <p style="
-                                font-family: 'Noto Serif SC';
-                                font-style: normal;
-                                font-weight: 600;
-                                font-size: 24px;
-                                line-height: 34px;
-                                letter-spacing: -0.003em;
-                                color: #000000;
-                                opacity: 0.7;
-                                display:inline;
+                                    font-family: 'Noto Serif SC';
+                                    font-style: normal;
+                                    font-weight: 600;
+                                    font-size: 24px;
+                                    line-height: 34px;
+                                    letter-spacing: -0.003em;
+                                    color: #000000;
+                                    opacity: 0.7;
+                                    display:inline;
                                 ">{{nowTimes}}</p>
                             </div>
 
@@ -96,11 +96,11 @@
                                         </div>
                                         <div class="list-text-box">
                                             <p class="title">{{ item.title }}</p>
-                                            <div class="tag" >
+                                            <!-- <div class="tag" >
                                                 <p v-for="(itemTag,index) in item.tagNameList" :key="index" style="display:inline;">
                                                     {{ itemTag }} &emsp; 
                                                 </p>
-                                            </div>
+                                            </div> -->
                                             
                                             <div class="foot">
                                                 <p class="writer">{{ item?item.contributorName.replaceAll('$',' '):'Loading'}}</p>
@@ -530,7 +530,7 @@ export default defineComponent({
                 .list-inf{
                     margin: 0 auto;
                     display: flex;
-                    height: 100%;
+                    
                     .list-img-box{
                         position: relative;
                         overflow: hidden;
@@ -574,9 +574,11 @@ export default defineComponent({
                     opacity: 0.6;
                 }
                 .foot{
+                    position: absolute;
                     font-size: 20px;
                     margin-left: 1vw;
-                    width: 96%;
+                    margin-bottom: -1vh;
+                    width: 70%;
                     display: flex;
                     justify-content: space-between;
                     /*position: absolute;*/
@@ -593,6 +595,9 @@ export default defineComponent({
                     color: #000000;
                     opacity: 0.6;
                     
+                }
+                .time{
+                    width: 30%;
                 }
             }
             .end-text{
