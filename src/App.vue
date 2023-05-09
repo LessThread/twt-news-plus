@@ -1,4 +1,7 @@
 <template>
+<div>
+  
+</div>
       <div class="header">
         <Header/>
       </div>
@@ -26,6 +29,23 @@ export default defineComponent({
     Recommend,
     Header,
   },
+
+  setup(){
+    onMounted(()=>{
+      function isMobile() {
+      let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
+      // localStorage.setItem('isiphone',flag)
+      console.log(flag)
+      return flag;
+    }
+    if (isMobile()) {
+      console.log("移动端");
+    } else {
+      console.log("pc端");
+    }
+
+    })
+  }
 })
 </script>
 
