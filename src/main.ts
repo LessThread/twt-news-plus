@@ -20,7 +20,6 @@ import "@/assets/font/text.css";
 
 
 
-
 const app = createApp(App)
 
 Object.keys(Icons).forEach(key => {

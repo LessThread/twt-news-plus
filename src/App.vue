@@ -1,36 +1,51 @@
 <template>
-<div>
-  
+<div v-if="Mobile">
+  <div class="header">
+    <Header/>
+  </div>
+
+  <div class="MainView">
+      <router-view/>
+  </div>
+
+  <div class="recommend">
+    <Recommend/>
+  </div>
 </div>
-      <div class="header">
-        <Header/>
-      </div>
 
-      <div class="MainView">
-          <router-view/>
-      </div>
+<div v-if="!Mobile">
+  <Mheader/>
+  <div class="MMainView">
+    <router-view/>
+  </div>
+</div>
 
-      <div class="recommend">
-        <Recommend/>
-      </div>
+
+
 </template>
 
 <script lang="ts">
 import { Options, Vue } from 'vue-class-component';
 import Recommend from '@/components/Recommend.vue';
 import Header from '@/components/Header.vue';
-import MainView from '@/views/MainView.vue';
 import { useStore } from 'vuex';
 import {defineComponent,computed,ref,watch,onMounted,reactive,toRefs,toRef,onBeforeUpdate} from 'vue'
 import {getAllNews} from '@/api/api';
+
+
+import Mheader from '@/mobile-src/components/mobile-header.vue'
 
 export default defineComponent({
   components: {
     Recommend,
     Header,
+    Mheader
   },
 
   setup(){
+    const store = useStore()
+
+    const Mobile = ref(0);
     onMounted(()=>{
       function isMobile() {
       let flag = navigator.userAgent.match(/(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i)
@@ -40,11 +55,18 @@ export default defineComponent({
     }
     if (isMobile()) {
       console.log("移动端");
+      Mobile.value = 0;
     } else {
       console.log("pc端");
+      Mobile.value = 1;
+      store.commit('isPhone',1)
     }
 
     })
+
+    return{
+      Mobile
+    }
   }
 })
 </script>
