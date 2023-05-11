@@ -1,25 +1,29 @@
 <template>
-<div v-if="Mobile">
-  <div class="header">
-    <Header/>
-  </div>
+<div v-if="!Mobile" >
+  <div  class="pc-view">
 
-  <div class="MainView">
-      <router-view/>
+    <div class="header">
+      <Header/>
+    </div>
+  
+    <div class="MainView">
+        <router-view/>
+    </div>
+  
+    <div class="recommend">
+      <Recommend/>
+    </div>
   </div>
-
-  <div class="recommend">
-    <Recommend/>
-  </div>
+  
 </div>
 
-<div v-if="!Mobile">
+
+<div v-if="Mobile">
   <Mheader/>
   <div class="MMainView">
     <router-view/>
   </div>
 </div>
-
 
 
 </template>
@@ -55,11 +59,10 @@ export default defineComponent({
     }
     if (isMobile()) {
       console.log("移动端");
-      Mobile.value = 0;
+      Mobile.value = 1;
     } else {
       console.log("pc端");
-      Mobile.value = 1;
-      store.commit('isPhone',1)
+      Mobile.value = 0;
     }
 
     })
@@ -102,4 +105,8 @@ export default defineComponent({
   height: 10vh;
   z-index: 9;
 }
+</style>
+
+<style lang="less">
+
 </style>
