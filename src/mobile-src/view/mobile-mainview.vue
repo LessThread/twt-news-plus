@@ -14,18 +14,16 @@
                     </template>
                     <el-carousel-item v-for="item in CarouselImg" :key="item.id" >
                         
+                        <div class="run-box">
+                            <el-image :src="getCarouselImg(item.imageId)" class="run" />
+                        </div>
+
+
+
                         <div class="carouse-text" @click="turnToDisplay(item.articleId)">
                             <div class="carouse-title">
                                 {{ item.title}}
                             </div>
-                            
-                            <div class="carouse-summary">
-                                {{ item.summary }}
-                            </div>
-                            
-                        </div>
-                        <div class="run-box">
-                            <el-image :src="getCarouselImg(item.imageId)" class="run" />
                         </div>
                         
                     </el-carousel-item>
@@ -73,14 +71,12 @@
                             
     
                             <div class="list-time" v-if="TodayNews.length" >
-                                <p style="display:inline">今日</p>
+                                <p style="display:inline;font-size: 24px;">今日</p>
                                 <p style="
                                     font-family: 'Noto Serif SC';
                                     font-style: normal;
                                     font-weight: 600;
-                                    font-size: 24px;
-                                    line-height: 34px;
-                                    letter-spacing: -0.003em;
+                                    font-size: 16px;
                                     color: #000000;
                                     opacity: 0.7;
                                     display:inline;
@@ -427,6 +423,152 @@ export default defineComponent({
 </script>
 
 <style scoped lang="less">
+@border-r : 8px;
+@cwidth : 40%;
+@main-view-width : 60vw;
+.carousel
+{
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    height: 300px;
+}
+.carouse-text
+{
+    position: absolute;
+    z-index: 2;
+    background-image: linear-gradient(to top , #000000, #ffffff00);
+    top:50%;
+    height: 100px;
+    width: 100%;
+}
+.carouse-title{
+    width: 90%;
+    left: 5%;
+    position:relative;
+    font-family: 'Noto Serif SC';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 24px;
+
+    color: #ffffff;
+}
+//////
+.view-text{
+    width: 90%;
+    margin: 0 auto;
+    .infinite-list-wrapper{
+        background-color:  #ffffff;
+        margin: 2vh auto;
+        width: 95%;
+
+        .list-time{
+            font-size: 40px;
+            font-family: 'Noto Serif SC';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 16px;
+            color: #000000;
+        }
+
+        .list-item{
+            background-color:  #ffffff;
+            position: relative;
+            margin: 1vh auto;
+            height: 25vh;
+            width: 100%;
+            
+            .list-inf{
+                margin: 0 auto;
+                display: flex;
+                
+                .list-img-box{
+                    position: relative;
+                    overflow: hidden;
+                    width: 30%;
+                    background-color:  #ffffff;
+                }
+                
+            }
+        }
+        .list-text-box{
+            display: flex;
+            justify-content: space-between;
+            flex-direction: column;
+            width: 70%;
+            height: 100%;
+            .title{
+                font-family: 'Noto Serif SC';
+                font-style: normal;
+                font-weight: 550;
+                font-size: 16px;
+                line-height: 52px;
+
+                margin-top: 0;
+                margin-left: 1vw;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+            .tag{
+                
+                margin-left: 1vw;
+                
+                margin-bottom: 1vw;
+                font-family: 'Noto Sans SC';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 29px;
+                /* identical to box height */
+                color: #000000;
+                opacity: 0.6;
+            }
+            .foot{
+                position: absolute;
+                font-size: 20px;
+                margin-left: 1vw;
+                margin-bottom: -1vh;
+                width: 70%;
+                display: flex;
+                justify-content: space-between;
+                /*position: absolute;*/
+                bottom: 0;
+                overflow: hidden;
+
+
+                font-family: 'Noto Sans SC';
+                font-style: normal;
+                font-weight: 400;
+                font-size: 20px;
+                line-height: 29px;
+                /* identical to box height */
+                color: #000000;
+                opacity: 0.6;
+                
+            }
+            .time{
+                width: 30%;
+            }
+        }
+        .end-text{
+            text-align: center;
+        }
+        
+    }
+   
+}
+
+.non-date{
+    font-family: 'Noto Serif SC';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 69px;
+    letter-spacing: -0.003em;
+    color: #000000;
+        }
+
 </style>
 
 <style lang="less">
