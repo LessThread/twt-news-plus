@@ -40,7 +40,7 @@ if(Mobile)
     {
       path: '/Display',
       name: 'Display',
-      component: () => import('../views/Display.vue')
+      component: () => import('../mobile-src/view/mobile-display.vue')
     }
   ]
 }

@@ -58,10 +58,10 @@
                                                     {{ itemTag }} &emsp; 
                                                 </p>
                                             </div>
-                                            <div class="foot">
+                                            <!-- <div class="foot">
                                                 <p class="writer">{{item?item.contributorName.replaceAll('$',' '):'Loading'}}</p>
                                                 <p class="time">{{item.releaseTime}}</p>
-                                            </div>
+                                            </div> -->
                                         </div>   
     
                                     </div>
@@ -98,10 +98,10 @@
                                                 </p>
                                             </div> -->
                                             
-                                            <div class="foot">
+                                            <!-- <div class="foot">
                                                 <p class="writer">{{ item?item.contributorName.replaceAll('$',' '):'Loading'}}</p>
                                                 <p class="time">{{item.releaseTime}}</p>
-                                            </div>
+                                            </div> -->
                                         </div>   
                                     </div>
                                 </div>
@@ -129,10 +129,10 @@
                                                         {{ itemTag }}&emsp;
                                                     </p>
                                                 </div>
-                                                <div class="foot">
+                                                <!-- <div class="foot">
                                                     <p class="writer">{{ item2?item2.contributorName.replaceAll('$',' '):'Loading'}}</p>
                                                     <p class="time">{{item2.releaseTime}}</p>
-                                                </div>
+                                                </div> -->
                                             </div>   
                                         </div>
                                     </div>

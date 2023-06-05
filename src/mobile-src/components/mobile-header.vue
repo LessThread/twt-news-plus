@@ -1,6 +1,6 @@
 <template>
     <div class="mobile-header">
-        <div class="title-svg">
+        <div class="title-svg" @click="turn2Home">
             <el-image :src="require('../assets/title.svg')"></el-image>
             <el-button type="primary" color="white" @click="drawer = true"><el-icon><Expand /></el-icon></el-button>
         </div>
@@ -41,10 +41,15 @@ export default defineComponent({
             drawer.value = false
         }
 
+        function turn2Home(){
+            router.push('/');
+        }
+
         return{
             drawer,
             direction,
             setClass,
+            turn2Home,
         }
     
     }

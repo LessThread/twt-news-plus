@@ -17,8 +17,8 @@
 
                 </div>
                 <div class="infomation">
-                    <div class="information-text">图/ {{contributorName}}</div>
-                    <p class="information-text"> 文/ {{picName}}</p>
+                    <div class="information-text">文/ {{contributorName}}</div>
+                    <p class="information-text"> 图/ {{picName}}</p>
                     <p class="information-text">来源/ {{origin}}</p>
                 </div>
                 <div class="QR">

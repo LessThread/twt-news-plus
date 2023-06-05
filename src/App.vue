@@ -58,10 +58,10 @@ export default defineComponent({
       return flag;
     }
     if (isMobile()) {
-      console.log("移动端");
+      console.log("MOBILE");
       Mobile.value = 1;
     } else {
-      console.log("pc端");
+      console.log("PC");
       Mobile.value = 0;
     }
 
