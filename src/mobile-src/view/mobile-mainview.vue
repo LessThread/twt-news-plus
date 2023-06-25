@@ -431,7 +431,7 @@ export default defineComponent({
     width: 100%;
     margin: 0 auto;
     overflow: hidden;
-    height: 300px;
+    height: 280px;
 }
 .carouse-text
 {
@@ -475,40 +475,36 @@ export default defineComponent({
             background-color:  #ffffff;
             position: relative;
             margin: 1vh auto;
-            height: 25vh;
+            height: 12vh;
             width: 100%;
             
             .list-inf{
                 margin: 0 auto;
                 display: flex;
-                
-                .list-img-box{
-                    position: relative;
-                    overflow: hidden;
-                    width: 30%;
-                    background-color:  #ffffff;
-                }
+                flex-direction:row-reverse;
                 
             }
+        }
+        .list-img-box{
+            position: relative;
+            overflow: hidden;
+            width: 35%;
+            background-color:  #ffffff;
         }
         .list-text-box{
             display: flex;
             justify-content: space-between;
             flex-direction: column;
-            width: 70%;
+            width: 65%;
             height: 100%;
             .title{
                 font-family: 'Noto Serif SC';
                 font-style: normal;
-                font-weight: 550;
                 font-size: 16px;
                 line-height: 52px;
-
                 margin-top: 0;
                 margin-left: 1vw;
-                &:hover{
-                    text-decoration: underline;
-                }
+                line-height: 120%
             }
             .tag{
                 
@@ -568,7 +564,9 @@ export default defineComponent({
     letter-spacing: -0.003em;
     color: #000000;
         }
-
+.main-view{
+    margin-top: 1vh;
+}
 </style>
 
 <style lang="less">

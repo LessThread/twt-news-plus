@@ -2,24 +2,24 @@
     <div class="mobile-header">
         <div class="title-svg" @click="turn2Home">
             <el-image :src="require('../assets/title.svg')"></el-image>
-            <el-button type="primary" color="white" @click="drawer = true"><el-icon><Expand /></el-icon></el-button>
+
+            <el-popover 
+                
+                placement="top" 
+                :width="160"
+                trigger="click"
+            >
+                <div class="menu">
+                    <el-button class="men-but" v-for="(item,index) in title_list" :key="index">{{item}}</el-button>
+                </div>
+                <template #reference>
+                    <el-button type="primary" color="white" ><el-icon><Expand /></el-icon></el-button>
+                </template>
+            </el-popover>
+
         </div>
 
-        <el-drawer
-        v-model="drawer"
-        title="分类"
-        :direction="direction"
-        size="50%"
-        >
-            <div class="mobile-muu-box">
-                <el-button text class="mobile-muu" @click="setClass" style="margin-left: 0;">近日新闻</el-button>
-                <el-button text class="mobile-muu" @click="setClass" style="margin-left: 0;">校园公告</el-button>
-                <el-button text class="mobile-muu" @click="setClass" style="margin-left: 0;">社团风采</el-button>
-                <el-button text class="mobile-muu" @click="setClass" style="margin-left: 0;">视点观察</el-button>
-                <el-button text class="mobile-muu" @click="setClass" style="margin-left: 0;">院系风采</el-button>
-                <el-button text class="mobile-muu" @click="setClass" style="margin-left: 0;">会议概要</el-button>
-            </div>
-        </el-drawer>
+        
         
     </div>
 </template>
@@ -34,22 +34,15 @@ import { ElMessageBox } from 'element-plus'
 export default defineComponent({
     name:'MHeader',
     setup(){
-        const drawer = ref(false)
-        const direction = ref('btt')
-
-        function setClass(){
-            drawer.value = false
-        }
-
+        //const visible = ref(false)
+        const title_list = ref(['近日新闻','校园公告','社团风采','视点观察','院系风采','会议概要'])
         function turn2Home(){
             router.push('/');
         }
 
         return{
-            drawer,
-            direction,
-            setClass,
             turn2Home,
+            title_list,
         }
     
     }
@@ -81,6 +74,14 @@ export default defineComponent({
 .mobile-muu{
     left: 0;
     position: initial;
+}
+.menu{
+    display: flex;
+    flex-direction:column;
+}
+.men-but{
+    margin-left: 0 !important;
+    border: 0;
 }
 </style>
 

@@ -4,17 +4,20 @@
         <div class="title">
             {{Title}}
         </div>
-
+        <div class="text-head-inf">
+            <p class="information">文/ {{contributorName}}</p>
+            <p class="information"> 图/ {{picName}}</p>
+        </div>
         <div class="content">
-
-            
-
-            
 
             <div class="text">
                 <div>
                     <div class="text-img-box">
                         <el-image :src="imgID" class="text-img"/>
+                    </div>
+
+                    <div class="text-sorce">
+                        来源：{{ origin }}
                     </div>
 
                     <!-- <div v-html="News" class="text-main">
@@ -119,7 +122,7 @@ export default defineComponent({
 .display{
     position: relative;
     z-index: 0;
-    margin-left: 5vw;
+    margin-left: 2vw;
 
     .title{
         font-family: 'Noto Serif SC';
@@ -128,87 +131,60 @@ export default defineComponent({
         font-size: 32px;
         color: #000000;
 
-        margin-left: 1vw;
+        margin:0 auto;
     }
 }
 
 .content{
-    margin: 3vh auto;
+    margin: 1vh auto;
     display: flex;
     width: 99%;
-    min-height: 80vh;
+    
+
     .text{
+        font-family: 'Noto Serif SC';
         width: 95%;
-        background-color: #f0f0f0;
         position: relative;
-        z-index: -1;
         height: auto;
         .text-img-box{
             width: 100%;
             overflow: hidden;
-            height: 50vh;
         }
         .text-img{
+            width: 100%;
+            height: auto;
+        }
+
+        .text-sorce{
+            font-family: 'Noto Serif SC';
+            font-style: 200;
+            background-color:#ffffff;
+            padding-top: 10px;
             width: 100%;
         }
 
     }
 
-    
-
-    .side{
-        .data{
-            width: 80%;
-            
-            text-align: center;
-            .data-common{
-                font-size: 30px;
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight:100;
-                font-size: 36px;
-                line-height: 44px;
-                text-align: center;
-            }
-            .data-large{
-                font-size: 48px;
-                font-family: 'Product Sans';
-                font-style: normal;
-                font-weight: 400;
-                line-height: 44px;
-                text-align: center;
-            }
-        }
-        
-        
-    }
 }
 
-.infomation {
-    margin-top: 5vh;
-    width: 80%;
-    text-align: center;
 
+
+.display{
+    margin-top: 1vh;
+}
+
+.text-head-inf{
+    display: flex;
+    justify-content: space-between;
+    width: 95%;
+}
+.information{
     font-family: 'Noto Serif SC';
     font-style: normal;
-    font-weight: 600;
-    font-size: 16px;
-    line-height: 23px;
-    color: #2A2A2A;
+    font-size: 10px;
+    font-weight: normal;
 
-    .information-text {
-        font-family: 'Noto Serif SC';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 16px;
-        line-height: 23px;
-        color: #2A2A2A;
-    }
-
-    
-    
 }
-
 </style>
 
 <style>
