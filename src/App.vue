@@ -1,7 +1,5 @@
 <template>
 <div v-if="!Mobile" id="pc-top-div">
-  <div  class="pc-view">
-
     <div class="header">
       <Header/>
     </div>
@@ -10,10 +8,12 @@
         <router-view/>
     </div>
   
-    <!-- <div class="recommend">
-      <Recommend/>
-    </div> -->
-  </div>
+    <div class="recommends">
+        <div style="width:85%;background-color: #4db12500;">.</div>
+        <div style="width:15%;max-width: 300px;background-color: rgba(252, 252, 251, 0);overflow: hidden;">
+          <Recommend/>
+        </div>  
+    </div>
   
 </div>
 
@@ -41,7 +41,7 @@ import Mheader from '@/mobile-src/components/mobile-header.vue'
 
 export default defineComponent({
   components: {
-    //Recommend,
+    Recommend,
     Header,
     Mheader
   },
@@ -75,34 +75,36 @@ export default defineComponent({
 </script>
 
 <style lang="less" scoped>
-
+@wi:1820px;
 
 #pc-top-div{
-  max-width: 1620px;
+  max-width: @wi;
   background-color: #ffffff;
   min-height: 1000px;
   margin: 0 auto;
   position: relative;
   width: 100%;
   min-width: 1200px;
+
 }
 
 
-.recommend{
+.recommends{
   position: fixed;
+  display:flex;
   background-color: #ffffff;
-  z-index: 4;
-  top: 10vh;
-  right: 0vw;
-  height: 90vh;
-  width: 20vw;
+  z-index: 0;
+  top: 100px;
+  width: 100%;
+  max-width: @wi;
+  min-height: 1000px;
 }
 
 .MainView{
   position: absolute;
   background-color:  #ffffff;
-  max-width: 1620px;
-  width: 100%;
+  max-width: 1820px;
+  width: 80%;
   top: 90px;
   z-index: 1;
   min-width: 1200px;
@@ -111,11 +113,12 @@ export default defineComponent({
 .header{
   position: fixed;
   background-color: #ffffff;
-  max-width: 1620px;
+  max-width: 1820px;
   width: 100%;
   height: 100px;
   z-index: 2;
   top:0;
+
 }
 </style>
 

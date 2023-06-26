@@ -435,9 +435,9 @@ export default defineComponent({
 .main-view{
     background-color:  #ffffff;
     position: absolute;
-    width: 77%;
+    width: 78%;
     max-width:1296px;
-    left: 23%;
+    left: 26%;
     .carousel{
         width: 95%;
         margin: 0 auto;

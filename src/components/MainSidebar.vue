@@ -59,13 +59,14 @@ export default defineComponent({
 
 <style lang="less" scoped>
 
+@main-wid:1820px;
 
 .sidebar{
     position: fixed;
     background-color:#FAFAFA;
     height: 100%;
     width: 20%;
-    max-width: 324px;
+    max-width: @main-wid*0.2;
     display: flex;
     flex-direction:column;
     z-index: 2;

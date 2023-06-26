@@ -76,7 +76,11 @@ export default defineComponent({
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+
 .recommend{
+  display: block;
+  width: 100%;
+  left: 80%;
   .head{
     position: relative;
     padding-left: 0.5vw;
@@ -116,6 +120,6 @@ export default defineComponent({
     }
     
   }
-
 }
+
 </style>

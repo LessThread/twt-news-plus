@@ -206,8 +206,8 @@ export default defineComponent({
         display: flex;
         position: absolute;
         top: 30px;
-        left: 25%;
-        width: 55%;
+        left: 22%;
+        width: 61%;
         height: 40px;
 
         .search-input{
@@ -275,11 +275,11 @@ export default defineComponent({
         position: absolute;
         display: flex;
         justify-content: space-between;
-        padding-left: 200px;
-        max-width: 300px;
-        left: 70%;
-        width: 28%;
+        
+        left: 86%;
+        width: 16%;
         top: 30px;
+
 
     }
 }
