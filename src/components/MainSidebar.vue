@@ -62,16 +62,18 @@ export default defineComponent({
 
 .sidebar{
     position: fixed;
-    background-color: #FAFAFA;
-    height: 90vh;
-    width: 18vw;
+    background-color:#FAFAFA;
+    height: 100%;
+    width: 20%;
+    max-width: 324px;
     display: flex;
     flex-direction:column;
+    z-index: 2;
     .title-box{
         background-color: #FAFAFA;
         width: 100%;
-        height: 6vh;
-        margin-top: 1vh;
+        height: 50px;
+        margin-top: 10px;
         display: flex;
         &:hover{
             font-weight: bold;

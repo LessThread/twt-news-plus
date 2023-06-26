@@ -1,18 +1,18 @@
 <template>
-<div v-if="!Mobile" >
+<div v-if="!Mobile" id="pc-top-div">
   <div  class="pc-view">
 
     <div class="header">
       <Header/>
     </div>
   
-    <div class="MainView">
+     <div class="MainView">
         <router-view/>
     </div>
   
-    <div class="recommend">
+    <!-- <div class="recommend">
       <Recommend/>
-    </div>
+    </div> -->
   </div>
   
 </div>
@@ -41,7 +41,7 @@ import Mheader from '@/mobile-src/components/mobile-header.vue'
 
 export default defineComponent({
   components: {
-    Recommend,
+    //Recommend,
     Header,
     Mheader
   },
@@ -76,6 +76,18 @@ export default defineComponent({
 
 <style lang="less" scoped>
 
+
+#pc-top-div{
+  max-width: 1620px;
+  background-color: #ffffff;
+  min-height: 1000px;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  min-width: 1200px;
+}
+
+
 .recommend{
   position: fixed;
   background-color: #ffffff;
@@ -89,21 +101,21 @@ export default defineComponent({
 .MainView{
   position: absolute;
   background-color:  #ffffff;
-
-  top: 10vh;
-  left: 0vw;
-  width: 80vw;
-  height: auto;
+  max-width: 1620px;
+  width: 100%;
+  top: 90px;
+  z-index: 1;
+  min-width: 1200px;
 }
 
 .header{
   position: fixed;
   background-color: #ffffff;
-  top: 0vw;
-  left: 0;
-  width: 100vw;
-  height: 10vh;
-  z-index: 9;
+  max-width: 1620px;
+  width: 100%;
+  height: 100px;
+  z-index: 2;
+  top:0;
 }
 </style>
 

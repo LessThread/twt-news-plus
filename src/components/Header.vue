@@ -50,7 +50,7 @@
         <div class="link">
             <el-link :underline="false">关于我们</el-link>
             <el-link :underline="false">投稿</el-link>
-            <el-button type="primary" class="log-button" @click="dialogFormVisible = 1">登录/注册</el-button>
+            <el-button type="primary" class="log-button" @click="dialogFormVisible = 1" style="">登录/注册</el-button>
 
             <div class="login-board" >
                 <el-dialog 
@@ -202,19 +202,13 @@ export default defineComponent({
 
 
 .header-bar{
-    position:static ;
-    .search-box{
-        position: absolute;
-        left: 20vw;
-    }
-
     .search-box{
         display: flex;
         position: absolute;
-        top: 3vh;
-        left: @left-dis+2vw;
-        width: @search-box-width;
-        height: 4vh;
+        top: 30px;
+        left: 25%;
+        width: 55%;
+        height: 40px;
 
         .search-input{
             position: absolute;
@@ -231,8 +225,8 @@ export default defineComponent({
             overflow: hidden;
         }
         .added-button-box{
-            display: flex;
             position: absolute;
+            display: flex;
             width: 40%;
             justify-content: space-between;
         }
@@ -251,41 +245,42 @@ export default defineComponent({
         position: absolute;
         z-index: 1;
         background-color: #FaFaFa;
-        width: 18vw;
-        height:10vh;
+        width: 20%;
+        height:100px;
         top:0;
     }
     .icon-box{
         z-index: 2;
-        position: relative;
-        margin-left: 2%;
-        margin-top: 1%;
-        width: @width;
-        bottom: -1vh;
-        height: @width;
-        max-width: 50%;
-        max-height: 50%;
+        position: absolute;
+        width: 20%;
+        height: 100px;
+
         .icon{
             position: absolute;
-            left: 1vw;
-            width: 100%;
-            height: 100%;
+            top:25%;
+            width: 30%;
+            height: 50%;
+            left: 10%;
         }
         .title{
             position: absolute;
-            width: 250%;
-            height: 100%;
-            left: 160%;
+            top:25%;
+            width: 40%;
+            height: 50%;
+            left: 40%;
         }
     }
 
     .link{
+        position: absolute;
         display: flex;
         justify-content: space-between;
-        position: absolute;
-        left: @left-dis+@search-box-width + 5vw;
-        width: 18vw;
-        top: 3vh;
+        padding-left: 200px;
+        max-width: 300px;
+        left: 70%;
+        width: 28%;
+        top: 30px;
+
     }
 }
 

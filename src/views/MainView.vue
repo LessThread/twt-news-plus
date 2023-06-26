@@ -1,5 +1,5 @@
 <template>
-    <div>
+
         <Sidebar/>
         <div class="main-view">
 
@@ -155,7 +155,6 @@
             </div>
 
         </div>
-    </div>
 </template>
 
 <script lang="ts">
@@ -436,10 +435,9 @@ export default defineComponent({
 .main-view{
     background-color:  #ffffff;
     position: absolute;
-    z-index: -1;
-    left: 18.5vw;
-    width: @main-view-width;
-    border-radius: @border-r;
+    width: 77%;
+    max-width:1296px;
+    left: 23%;
     .carousel{
         width: 95%;
         margin: 0 auto;
