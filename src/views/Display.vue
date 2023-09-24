@@ -36,7 +36,11 @@
             <div class="text">
                 <div>
                     <div class="text-img-box">
-                        <el-image :src="imgID" class="text-img"/>
+                        <el-image 
+                        class="text-img"
+                        :fit="fits"
+                        :src="imgID" 
+                        />
                     </div>
 
                     <!-- <div v-html="News" class="text-main">
@@ -78,6 +82,8 @@ export default defineComponent({
         const picName = ref('');
         const qr = ref([require('../assets/QR/qr.png')])
         const mdORhtml = ref();
+        
+        const fits = ['fill', 'contain', 'cover', 'none', 'scale-down']
 
         function setMdORhtml(){
             let mark = News.value.charAt(News.value.length - 1);
@@ -131,6 +137,7 @@ export default defineComponent({
             picName,
             qr,
             mdORhtml,
+            fits
         };
     },
 })
@@ -184,18 +191,11 @@ export default defineComponent({
         .text-img-box{
             width: 100%;
             overflow: hidden;
-            height: 50vh;
         }
         .text-img{
             width: 100%;
         }
 
-        .text-main{
-            
-        }
-        .text-view{
-            
-        }
     }
 
     

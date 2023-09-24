@@ -522,7 +522,6 @@ export default defineComponent({
                 background-color:  #ffffff;
                 position: relative;
                 margin: 5vh auto;
-                height: 25vh;
                 width: 100%;
                 
                 .list-inf{
@@ -543,7 +542,6 @@ export default defineComponent({
                 justify-content: space-between;
                 flex-direction: column;
                 width: 70%;
-                height: 100%;
                 .title{
                     font-family: 'Noto Serif SC';
                     font-style: normal;
